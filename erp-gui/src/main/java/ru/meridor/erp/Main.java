@@ -1,9 +1,12 @@
 package ru.meridor.erp;
 
 import javafx.application.Application;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import org.springframework.context.support.AbstractXmlApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -14,7 +17,7 @@ import java.util.Optional;
 
 public class Main extends Application {
 
-    private AbstractXmlApplicationContext context;
+    private Parent mainContainer;
 
     public static void main(String[] args) throws Exception {
         /**
@@ -39,33 +42,46 @@ public class Main extends Application {
     @Override
     public void init() throws Exception {
         super.init();
-        context = new ClassPathXmlApplicationContext("META-INF/spring/context.xml");
-        context.start();
+        AbstractXmlApplicationContext context = new ClassPathXmlApplicationContext("META-INF/spring/context.xml");
+        context.registerShutdownHook();
     }
 
     @Override
     public void start(Stage stage) throws Exception {
         stage.setTitle("Hello World");
-        Optional<URL> fxml = getFXML("main.fxml");
+        Optional<URL> fxml = getURLFromClassPath("main.fxml");
         if (!fxml.isPresent()) {
             throw new FileNotFoundException("Can't find main GUI configuration file");
         }
-        Parent root = FXMLLoader.load(fxml.get());
-        Scene scene = new Scene(root);
+        mainContainer = FXMLLoader.load(fxml.get());
+
+        insertPluginComponents(getURLFromClassPath("plugin.fxml"));
+
+        Scene scene = new Scene(mainContainer);
         stage.setScene(scene);
         stage.show();
     }
 
-    private Optional<URL> getFXML(String fileName) {
+    private Optional<URL> getURLFromClassPath(String fileName) {
         return (getClass().getClassLoader() != null) ?
                 Optional.ofNullable(getClass().getClassLoader().getResource(fileName)) :
                 Optional.empty();
     }
 
-    @Override
-    public void stop() throws Exception {
-        super.stop();
-        context.stop();
-        context.destroy();
+    private void insertPluginComponents(Optional<URL> pluginUrl) throws Exception {
+        if (pluginUrl.isPresent()) {
+            Parent pluginContents = FXMLLoader.load(pluginUrl.get());
+            if (pluginContents instanceof Embed) {
+                Embed embed = (Embed) pluginContents;
+                ObservableList<Node> children = embed.getChildren();
+                String containerId = embed.getTo();
+                Optional<Node> container = Optional.ofNullable(mainContainer.lookup("#" + containerId));
+                if (container.isPresent() && container.get() instanceof Pane){
+                    Pane pane = (Pane) container.get();
+                    pane.getChildren().addAll(children);
+                }
+            }
+        }
     }
+
 }
