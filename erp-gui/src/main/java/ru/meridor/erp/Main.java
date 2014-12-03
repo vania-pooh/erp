@@ -10,14 +10,19 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import org.springframework.context.support.AbstractXmlApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.core.io.Resource;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.Optional;
 
 public class Main extends Application {
 
     private Parent mainContainer;
+
+    private AbstractXmlApplicationContext context;
 
     public static void main(String[] args) throws Exception {
         /**
@@ -34,7 +39,8 @@ public class Main extends Application {
          * Here come main application loading steps:
          * 1) Show splash screen
          * 2) Start Spring container with Steve support
-         * 3)
+         * 3) Initialize plugins and inject respective controller beans to Spring
+         * 4) Embed GUI elements to main UI
          */
         launch(args);
     }
@@ -42,18 +48,19 @@ public class Main extends Application {
     @Override
     public void init() throws Exception {
         super.init();
-        AbstractXmlApplicationContext context = new ClassPathXmlApplicationContext("META-INF/spring/context.xml");
+        context = new ClassPathXmlApplicationContext("META-INF/spring/context.xml");
         context.registerShutdownHook();
     }
 
     @Override
     public void start(Stage stage) throws Exception {
         stage.setTitle("Hello World");
+        stage.setMaximized(true);
         Optional<URL> fxml = getURLFromClassPath("main.fxml");
         if (!fxml.isPresent()) {
             throw new FileNotFoundException("Can't find main GUI configuration file");
         }
-        mainContainer = FXMLLoader.load(fxml.get());
+        mainContainer = loadFXML(fxml.get());
 
         insertPluginComponents(getURLFromClassPath("plugin.fxml"));
 
@@ -62,15 +69,29 @@ public class Main extends Application {
         stage.show();
     }
 
-    private Optional<URL> getURLFromClassPath(String fileName) {
-        return (getClass().getClassLoader() != null) ?
-                Optional.ofNullable(getClass().getClassLoader().getResource(fileName)) :
+    private Optional<URL> getURLFromClassPath(String fileName) throws IOException {
+        Resource resource = context.getResource(fileName);
+        return resource.exists() ?
+                Optional.of(resource.getURL()) :
                 Optional.empty();
+    }
+
+    private Parent loadFXML(URL url) throws Exception {
+        FXMLLoader loader = getFXMLLoader();
+        try (InputStream inputStream = url.openStream()) {
+            return loader.load(inputStream);
+        }
+    }
+
+    private FXMLLoader getFXMLLoader() {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setControllerFactory(context::getBean);
+        return loader;
     }
 
     private void insertPluginComponents(Optional<URL> pluginUrl) throws Exception {
         if (pluginUrl.isPresent()) {
-            Parent pluginContents = FXMLLoader.load(pluginUrl.get());
+            Parent pluginContents = loadFXML(pluginUrl.get());
             if (pluginContents instanceof Embed) {
                 Embed embed = (Embed) pluginContents;
                 ObservableList<Node> children = embed.getChildren();

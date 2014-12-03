@@ -5,4 +5,9 @@
        
        <import resource="classpath:META-INF/spring/launch-local-config.xml"/>
 
+       <bean class="ru.meridor.erp.MainContainerAwareBeanPostProcessor"/>
+
+       <bean id="navigationController" class="ru.meridor.erp.controller.NavigationController"/>
+       <bean id="tabsController" class="ru.meridor.erp.controller.TabsController"/>
+
 </beans>

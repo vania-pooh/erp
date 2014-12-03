@@ -8,6 +8,8 @@ import javafx.scene.Parent;
 @DefaultProperty("children")
 public class Embed extends Parent {
 
+    //TODO: we can add properties like - after, before, last, first
+
     private String to;
 
     public String getTo() {
