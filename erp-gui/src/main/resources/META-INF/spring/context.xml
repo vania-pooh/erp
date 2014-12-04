@@ -5,7 +5,20 @@
        
        <import resource="classpath:META-INF/spring/launch-local-config.xml"/>
 
-       <bean class="ru.meridor.erp.MainContainerAwareBeanPostProcessor"/>
+       <bean id="fxmlLoaderFactory" class="ru.meridor.erp.beans.FXMLLoaderFactory"/>
+       <bean id="fxmlLoader" factory-bean="fxmlLoaderFactory" factory-method="getFXMLLoader" scope="prototype"/>
+       <bean id="uiFactory" class="ru.meridor.erp.beans.UIFactory" scope="prototype">
+              <constructor-arg ref="fxmlLoader"/>
+       </bean>
+
+       <bean id="mainContainer" factory-bean="uiFactory" factory-method="getUI">
+              <constructor-arg type="java.lang.String" value="main.fxml"/>
+       </bean>
+
+       <bean class="ru.meridor.erp.beans.PluginProcessor">
+              <constructor-arg index="0" ref="uiFactory"/>
+              <constructor-arg index="1" ref="mainContainer"/>
+       </bean>
 
        <bean id="navigationController" class="ru.meridor.erp.controller.NavigationController"/>
        <bean id="tabsController" class="ru.meridor.erp.controller.TabsController"/>
