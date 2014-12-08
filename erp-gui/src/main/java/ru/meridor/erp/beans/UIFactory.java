@@ -10,7 +10,9 @@ import org.springframework.core.io.Resource;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Optional;
 
 public class UIFactory implements ApplicationContextAware {
@@ -23,25 +25,25 @@ public class UIFactory implements ApplicationContextAware {
         this.fxmlLoader = fxmlLoader;
     }
 
-    private Optional<URL> getURLFromClassPath(String fileName) throws IOException {
+    private Optional<Path> getPathFromClassPath(String fileName) throws IOException {
         Resource resource = applicationContext.getResource(fileName);
+
         return resource.exists() ?
-                Optional.of(resource.getURL()) :
+                Optional.of(Paths.get(resource.getURI())) :
                 Optional.empty();
     }
-
-    public Parent getUI(URL url) throws Exception {
-        try (InputStream inputStream = url.openStream()) {
-            return fxmlLoader.load(inputStream);
-        }
-    }
-
     public Parent getUI(String fileName) throws Exception {
-        Optional<URL> fxml = getURLFromClassPath(fileName);
+        Optional<Path> fxml = getPathFromClassPath(fileName);
         if (!fxml.isPresent()) {
             throw new FileNotFoundException(String.format("FXML file %s does not exist", fileName));
         }
         return getUI(fxml.get());
+    }
+
+    public Parent getUI(Path path) throws Exception {
+        try (InputStream inputStream = Files.newInputStream(path)) {
+            return fxmlLoader.load(inputStream);
+        }
     }
 
     @Override

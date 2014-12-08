@@ -9,9 +9,10 @@ public class FXMLLoaderFactory implements ApplicationContextAware {
 
     private ApplicationContext applicationContext;
 
-    public FXMLLoader getFXMLLoader() {
+    public FXMLLoader getFXMLLoader(UberClassLoader uberClassLoader) {
         FXMLLoader loader = new FXMLLoader();
         loader.setControllerFactory(applicationContext::getBean);
+        loader.setClassLoader(uberClassLoader);
         return loader;
     }
 

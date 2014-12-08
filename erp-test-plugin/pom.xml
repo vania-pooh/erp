@@ -3,41 +3,37 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <groupId>ru.meridor.erp</groupId>
         <artifactId>erp</artifactId>
+        <groupId>ru.meridor.erp</groupId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>erp-gui</artifactId>
+    <artifactId>erp-test-plugin</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>ru.meridor.erp</groupId>
             <artifactId>erp-framework</artifactId>
         </dependency>
-        <dependency>
-            <groupId>ru.meridor.steve</groupId>
-            <artifactId>steve-local</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-        </dependency>
     </dependencies>
 
     <build>
         <plugins>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
+                <groupId>ru.meridor.stecker</groupId>
+                <artifactId>stecker-plugin-generator</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
                 <configuration>
-                    <mainClass>ru.meridor.erp.Main</mainClass>
+                    <outputDirectory>${project.parent.basedir}/plugins</outputDirectory>
                 </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>create</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

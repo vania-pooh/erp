@@ -7,35 +7,26 @@ import javafx.scene.layout.Pane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationListener;
-import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.core.io.Resource;
 import ru.meridor.erp.Embed;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.nio.file.Path;
 import java.util.Optional;
 
-public class PluginProcessor implements ApplicationListener<ContextRefreshedEvent> {
+public class PluginUIProcessor implements ApplicationListener<PluginsLoadedEvent> {
 
-    private static final Logger LOG = LoggerFactory.getLogger(PluginProcessor.class);
-
-    //TODO: create controller instances from plugin file here and inject other extension points via BeanDefinitionRegistryPostProcessor
-    //TODO: plugin name to FXML list mapping (to be filled on first plugin pass)
-    private final Map<String, List<Resource>> fxmlFiles = new HashMap<>();
+    private static final Logger LOG = LoggerFactory.getLogger(PluginUIProcessor.class);
 
     private final UIFactory uiFactory;
 
     private final Parent mainContainer;
 
-    public PluginProcessor(UIFactory uiFactory, Parent mainContainer) {
+    public PluginUIProcessor(UIFactory uiFactory, Parent mainContainer) {
         this.uiFactory = uiFactory;
         this.mainContainer = mainContainer;
     }
 
-    private void embedUI() throws Exception {
-        String fileName = "plugin.fxml"; //TODO: this should come from plugin classpath
-        Parent pluginContents = uiFactory.getUI(fileName);
+    private void embedUI(Path fxmlPath) throws Exception {
+        Parent pluginContents = uiFactory.getUI(fxmlPath);
         if (pluginContents instanceof Embed) {
             Embed embed = (Embed) pluginContents;
             ObservableList<Node> children = embed.getChildren();
@@ -49,9 +40,15 @@ public class PluginProcessor implements ApplicationListener<ContextRefreshedEven
     }
 
     @Override
-    public void onApplicationEvent(ContextRefreshedEvent event) {
+    public void onApplicationEvent(PluginsLoadedEvent pluginsLoadedEvent) {
         try {
-            embedUI();
+            for (Path fxmlFilePath : pluginsLoadedEvent.getFxmlFiles()) {
+                LOG.debug(String.format(
+                        "Processing resource file %s",
+                        fxmlFilePath.toString()
+                ));
+                embedUI(fxmlFilePath);
+            }
         } catch (Exception e) {
             LOG.error("An exception while initializing UI from plugin", e);
         }

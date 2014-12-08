@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<?import javafx.scene.control.Button?>
-<?import ru.meridor.erp.Embed?>
-
-<Embed to="somePanel" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.meridor.erp.controller.NavigationController">
-   <Button text="AnotherButton" prefWidth="100" prefHeight="100"/>
-</Embed>

@@ -26,10 +26,18 @@
 
     <modules>
         <module>erp-gui</module>
+        <module>erp-framework</module>
+        <module>erp-test-plugin</module>
     </modules>
 
     <dependencyManagement>
         <dependencies>
+
+            <dependency>
+                <groupId>ru.meridor.erp</groupId>
+                <artifactId>erp-framework</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 
             <!-- Spring -->
             <dependency>
