@@ -41,7 +41,6 @@ public class Main extends Application {
         LOG.info("Initializing application");
         super.init();
         processParameters();
-        initContext();
     }
 
     private void processParameters() {
@@ -49,18 +48,19 @@ public class Main extends Application {
         //TODO: define parameters
     }
 
-    private void initContext() {
-        context = new ClassPathXmlApplicationContext("META-INF/spring/context.xml");
-        context.registerShutdownHook();
-    }
-
     @Override
     public void start(Stage stage) throws Exception {
         stage.setTitle("Hello World");
+        initContext();
         Parent mainContainer = context.getBean("mainContainer", Parent.class);
         Scene scene = new Scene(mainContainer);
         stage.setScene(scene);
         stage.show();
+    }
+
+    private void initContext() {
+        context = new ClassPathXmlApplicationContext("META-INF/spring/context.xml");
+        context.registerShutdownHook();
     }
 
 }
