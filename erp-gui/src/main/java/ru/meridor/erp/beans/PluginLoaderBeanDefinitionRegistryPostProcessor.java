@@ -49,7 +49,7 @@ public class PluginLoaderBeanDefinitionRegistryPostProcessor implements BeanDefi
         for (Class extensionPoint : extensionPoints) {
             implementations = pluginRegistry.getImplementations(extensionPoint);
             LOG.debug(String.format(
-                    "Found %d implementations for %s extension point: %s",
+                    "Found %d implementations for %s extension point: [%s]",
                     implementations.size(),
                     extensionPoint.getCanonicalName(),
                     implementations.stream().map(Class::getCanonicalName).collect(Collectors.joining(LIST_SEPARATOR))
@@ -68,7 +68,7 @@ public class PluginLoaderBeanDefinitionRegistryPostProcessor implements BeanDefi
         Class[] extensionPoints = getExtensionPoints();
         String[] resourcesPatterns = getResourcesPatterns();
         LOG.info(String.format(
-                "Loading plugins from %s with extension points = %s and resource patterns = %s",
+                "Loading plugins from %s with extension points = [%s] and resource patterns = [%s]",
                 pluginsDirectory,
                 Arrays.stream(extensionPoints).map(Class::getCanonicalName).collect(Collectors.joining(LIST_SEPARATOR)),
                 Arrays.stream(resourcesPatterns).collect(Collectors.joining(", "))
@@ -104,14 +104,14 @@ public class PluginLoaderBeanDefinitionRegistryPostProcessor implements BeanDefi
                 String missingDependencies = dependencyProblem.getMissingDependencies().stream()
                         .map(Dependency::toString)
                         .collect(Collectors.joining(LIST_SEPARATOR));
-                LOG.error(String.format("The following dependencies are missing: %s", missingDependencies));
+                LOG.error(String.format("The following dependencies are missing: [%s]", missingDependencies));
             }
 
             if (!dependencyProblem.getConflictingDependencies().isEmpty()) {
                 String conflictingDependencies = dependencyProblem.getConflictingDependencies().stream()
                         .map(Dependency::toString)
                         .collect(Collectors.joining(LIST_SEPARATOR));
-                LOG.error(String.format("This plugin conflicts with following dependencies: %s", conflictingDependencies));
+                LOG.error(String.format("This plugin conflicts with the following dependencies: [%s]", conflictingDependencies));
             }
         }
     }
@@ -137,7 +137,6 @@ public class PluginLoaderBeanDefinitionRegistryPostProcessor implements BeanDefi
 
     @Override
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
-        //Do nothing
         beanFactory.addBeanPostProcessor(new PluginClassLoaderBeanPostProcessor(implementations));
     }
 
@@ -150,7 +149,7 @@ public class PluginLoaderBeanDefinitionRegistryPostProcessor implements BeanDefi
     public void onApplicationEvent(ContextRefreshedEvent event) {
         List<Path> resources = pluginRegistry.getResources();
         LOG.debug(String.format(
-                "Found %d resource files: %s",
+                "Found %d resource files: [%s]",
                 resources.size(),
                 resources.stream().map(Path::toString).collect(Collectors.joining(LIST_SEPARATOR))
         ));

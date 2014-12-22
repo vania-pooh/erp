@@ -24,7 +24,7 @@ public class Main extends Application {
          * 3. Running jobs - Steve
          * 4. Plugin system - Stecker
          * 5. Logger - log4j
-         * 6.
+         * 6. Testing - Arabica
          *
          *
          * Here come main application loading steps:
@@ -40,6 +40,16 @@ public class Main extends Application {
     public void init() throws Exception {
         LOG.info("Initializing application");
         super.init();
+        processParameters();
+        initContext();
+    }
+
+    private void processParameters() {
+        Parameters parameters = getParameters();
+        //TODO: define parameters
+    }
+
+    private void initContext() {
         context = new ClassPathXmlApplicationContext("META-INF/spring/context.xml");
         context.registerShutdownHook();
     }
@@ -47,7 +57,6 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         stage.setTitle("Hello World");
-        stage.setMaximized(true);
         Parent mainContainer = context.getBean("mainContainer", Parent.class);
         Scene scene = new Scene(mainContainer);
         stage.setScene(scene);

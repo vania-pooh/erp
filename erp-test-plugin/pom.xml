@@ -16,6 +16,26 @@
             <groupId>ru.meridor.erp</groupId>
             <artifactId>erp-framework</artifactId>
         </dependency>
+        <dependency>
+            <groupId>ru.meridor.erp</groupId>
+            <artifactId>erp-gui</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-library</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.meridor.arabica</groupId>
+            <artifactId>arabica-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.meridor.arabica</groupId>
+            <artifactId>arabica-matchers</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
