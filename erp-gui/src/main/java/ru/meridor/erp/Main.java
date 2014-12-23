@@ -41,6 +41,7 @@ public class Main extends Application {
         LOG.info("Initializing application");
         super.init();
         processParameters();
+        initContext();
     }
 
     private void processParameters() {
@@ -51,7 +52,6 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         stage.setTitle("Hello World");
-        initContext();
         Parent mainContainer = context.getBean("mainContainer", Parent.class);
         Scene scene = new Scene(mainContainer);
         stage.setScene(scene);
