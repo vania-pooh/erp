@@ -47,6 +47,7 @@ public class Main extends Application {
     private void processParameters() {
         Parameters parameters = getParameters();
         //TODO: define parameters
+        //TODO: --dev options turns on file watcher in Stecker (resources in classes autoloading)
     }
 
     @Override

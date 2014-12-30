@@ -25,7 +25,7 @@
     </properties>
 
     <modules>
-        <module>erp-gui</module>
+        <module>erp-core</module>
         <module>erp-framework</module>
         <module>erp-test-plugin</module>
     </modules>
