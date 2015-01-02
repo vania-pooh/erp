@@ -15,7 +15,7 @@ import java.util.Collections;
 
 public class UIFactory implements ApplicationContextAware {
 
-    private final FXMLLoader fxmlLoader;
+    private FXMLLoader fxmlLoader;
 
     private ApplicationContext applicationContext;
 
@@ -49,6 +49,10 @@ public class UIFactory implements ApplicationContextAware {
         try (InputStream inputStream = Files.newInputStream(path)) {
             return fxmlLoader.load(inputStream);
         }
+    }
+    
+    public void reset() {
+        fxmlLoader = applicationContext.getBean(FXMLLoader.class);
     }
 
     @Override
