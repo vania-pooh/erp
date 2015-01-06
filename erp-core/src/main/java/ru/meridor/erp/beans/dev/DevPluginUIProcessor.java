@@ -1,9 +1,12 @@
-package ru.meridor.erp.beans;
+package ru.meridor.erp.beans.dev;
 
 import javafx.application.Platform;
 import javafx.scene.Parent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.meridor.erp.beans.PluginUIProcessor;
+import ru.meridor.erp.beans.PluginsLoadedEvent;
+import ru.meridor.erp.beans.UIFactory;
 import ru.meridor.erp.beans.ui.ReplacingUIStrategy;
 import ru.meridor.erp.beans.ui.UIStrategyFactory;
 import ru.meridor.stecker.ResourcesWatcher;
@@ -50,13 +53,17 @@ public class DevPluginUIProcessor extends PluginUIProcessor {
             LOG.error("An exception while initializing UI from plugin", e);
         }
 
-        resourcesWatcher = new ResourcesWatcher(fxmlFilePaths);
-        resourcesWatcher.addChangedHandler(this::onFXMLFileChange);
-        resourcesWatcher.start();
-        LOG.info(String.format(
-                "Started resources watcher for paths [%s]",
-                fxmlFilePaths.stream().map(Path::toString).collect(Collectors.joining(", "))
-        ));
+        if (fxmlFilePaths.size() > 0) {
+            resourcesWatcher = new ResourcesWatcher(fxmlFilePaths);
+            resourcesWatcher.addChangedHandler(this::onFXMLFileChange);
+            resourcesWatcher.start();
+            LOG.info(String.format(
+                    "Started resources watcher for paths [%s]",
+                    fxmlFilePaths.stream().map(Path::toString).collect(Collectors.joining(", "))
+            ));
+        } else {
+            LOG.info("Did not start resources watcher because no resources were found");
+        }
     }
     
     private void onFXMLFileChange(Path fxmlFilePath) {

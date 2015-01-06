@@ -6,7 +6,10 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowire;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
-import org.springframework.beans.factory.support.*;
+import org.springframework.beans.factory.support.BeanDefinitionRegistry;
+import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
+import org.springframework.beans.factory.support.BeanDefinitionValidationException;
+import org.springframework.beans.factory.support.RootBeanDefinition;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.context.ApplicationListener;
@@ -38,7 +41,7 @@ public class PluginLoaderBeanDefinitionRegistryPostProcessor implements BeanDefi
     private PluginRegistry pluginRegistry;
 
     private ApplicationEventPublisher eventPublisher;
-
+    
     private List<Class> implementations = new ArrayList<>();
 
     @Override
@@ -75,15 +78,19 @@ public class PluginLoaderBeanDefinitionRegistryPostProcessor implements BeanDefi
         ));
 
         try {
-            return PluginLoader
-                    .withPluginDirectory(pluginsDirectory)
-                    .withExtensionPoints(extensionPoints)
-                    .withResourcesPatterns(resourcesPatterns)
-                    .load();
+            return loadPlugins(pluginsDirectory, extensionPoints, resourcesPatterns);
         } catch (PluginException e) {
             handlePluginException(e);
             throw new BeanDefinitionValidationException("Failed to load plugins", e);
         }
+    }
+    
+    protected PluginRegistry loadPlugins(Path pluginsDirectory, Class[] extensionPoints, String[] resourcesPatterns) throws PluginException {
+        return PluginLoader
+                .withPluginDirectory(pluginsDirectory)
+                .withExtensionPoints(extensionPoints)
+                .withResourcesPatterns(resourcesPatterns)
+                .load();
     }
 
     private void handlePluginException(PluginException e) {
@@ -116,7 +123,7 @@ public class PluginLoaderBeanDefinitionRegistryPostProcessor implements BeanDefi
         }
     }
 
-    private Path getPluginsDirectory() {
+    protected Path getPluginsDirectory() {
         return Paths.get(System.getProperty("user.dir"), "plugins");
     }
 

@@ -5,7 +5,6 @@
 
     <import resource="classpath:META-INF/spring/launch-local-config.xml"/>
 
-    <bean class="ru.meridor.erp.beans.PluginLoaderBeanDefinitionRegistryPostProcessor"/>
 
     <bean id="fxmlLoaderFactory" class="ru.meridor.erp.beans.FXMLLoaderFactory"/>
     <bean id="uberClassLoader" class="ru.meridor.erp.beans.UberClassLoader"/>
@@ -26,6 +25,7 @@
 
     <!-- Default beans -->
     <beans profile="default">
+        <bean class="ru.meridor.erp.beans.PluginLoaderBeanDefinitionRegistryPostProcessor"/>
         <bean class="ru.meridor.erp.beans.PluginUIProcessor">
             <constructor-arg index="0" ref="uiFactory"/>
             <constructor-arg index="1" ref="mainContainer"/>
@@ -34,7 +34,8 @@
 
     <!-- Development specific beans -->
     <beans profile="dev">
-        <bean class="ru.meridor.erp.beans.DevPluginUIProcessor" destroy-method="onDestroy">
+        <bean class="ru.meridor.erp.beans.dev.DevPluginLoaderBeanDefinitionRegistryPostProcessor"/>
+        <bean class="ru.meridor.erp.beans.dev.DevPluginUIProcessor" destroy-method="onDestroy">
             <constructor-arg index="0" ref="uiFactory"/>
             <constructor-arg index="1" ref="mainContainer"/>
         </bean>
