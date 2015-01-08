@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="fxmlLoaderFactory" class="ru.meridor.erp.ui.FXMLLoaderFactory"/>
+    <bean id="uberClassLoader" class="ru.meridor.erp.ui.UberClassLoader"/>
+    <bean id="fxmlLoader" factory-bean="fxmlLoaderFactory" factory-method="getFXMLLoader" scope="prototype">
+        <constructor-arg ref="uberClassLoader"/>
+    </bean>
+    <bean id="uiFactory" class="ru.meridor.erp.ui.UIFactory" scope="prototype">
+        <constructor-arg ref="fxmlLoader"/>
+    </bean>
+
+    <bean id="mainContainer" factory-bean="uiFactory" factory-method="getUI">
+        <constructor-arg type="java.lang.String" value="main.fxml"/>
+    </bean>
+
+
+    <bean id="navigationController" class="ru.meridor.erp.controller.NavigationController"/>
+    <bean id="tabsController" class="ru.meridor.erp.controller.TabsController"/>
+    
+    <!-- Default beans -->
+    <beans profile="default">
+        <bean class="ru.meridor.erp.ui.PluginLoaderBeanDefinitionRegistryPostProcessor"/>
+        <bean class="ru.meridor.erp.ui.PluginUIProcessor">
+            <constructor-arg index="0" ref="uiFactory"/>
+            <constructor-arg index="1" ref="mainContainer"/>
+        </bean>
+    </beans>
+
+    <!-- Development specific beans -->
+    <beans profile="dev">
+        <bean class="ru.meridor.erp.ui.dev.DevPluginLoaderBeanDefinitionRegistryPostProcessor"/>
+        <bean class="ru.meridor.erp.ui.dev.DevPluginUIProcessor" destroy-method="onDestroy">
+            <constructor-arg index="0" ref="uiFactory"/>
+            <constructor-arg index="1" ref="mainContainer"/>
+        </bean>
+    </beans>
+
+</beans>
