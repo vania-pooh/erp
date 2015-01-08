@@ -1,10 +1,10 @@
-package ru.meridor.erp.beans;
+package ru.meridor.erp.ui;
 
 import javafx.scene.Parent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationListener;
-import ru.meridor.erp.beans.ui.UIStrategyFactory;
+import ru.meridor.erp.ui.strategy.UIStrategyFactory;
 
 import java.nio.file.Path;
 

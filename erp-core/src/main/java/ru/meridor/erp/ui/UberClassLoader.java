@@ -1,4 +1,4 @@
-package ru.meridor.erp.beans;
+package ru.meridor.erp.ui;
 
 import java.util.HashMap;
 import java.util.Map;

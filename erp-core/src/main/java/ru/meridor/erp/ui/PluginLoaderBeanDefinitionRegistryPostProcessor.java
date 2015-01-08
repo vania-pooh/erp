@@ -1,4 +1,4 @@
-package ru.meridor.erp.beans;
+package ru.meridor.erp.ui;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

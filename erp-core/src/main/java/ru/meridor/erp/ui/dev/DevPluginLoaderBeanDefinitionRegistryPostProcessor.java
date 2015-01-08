@@ -1,8 +1,8 @@
-package ru.meridor.erp.beans.dev;
+package ru.meridor.erp.ui.dev;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.meridor.erp.beans.PluginLoaderBeanDefinitionRegistryPostProcessor;
+import ru.meridor.erp.ui.PluginLoaderBeanDefinitionRegistryPostProcessor;
 import ru.meridor.stecker.PluginException;
 import ru.meridor.stecker.PluginLoader;
 import ru.meridor.stecker.PluginRegistry;

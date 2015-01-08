@@ -1,4 +1,4 @@
-package ru.meridor.erp.beans;
+package ru.meridor.erp.ui;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;

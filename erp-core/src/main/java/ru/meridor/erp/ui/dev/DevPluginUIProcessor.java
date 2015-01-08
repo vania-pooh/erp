@@ -1,14 +1,14 @@
-package ru.meridor.erp.beans.dev;
+package ru.meridor.erp.ui.dev;
 
 import javafx.application.Platform;
 import javafx.scene.Parent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.meridor.erp.beans.PluginUIProcessor;
-import ru.meridor.erp.beans.PluginsLoadedEvent;
-import ru.meridor.erp.beans.UIFactory;
-import ru.meridor.erp.beans.ui.ReplacingUIStrategy;
-import ru.meridor.erp.beans.ui.UIStrategyFactory;
+import ru.meridor.erp.ui.PluginUIProcessor;
+import ru.meridor.erp.ui.PluginsLoadedEvent;
+import ru.meridor.erp.ui.UIFactory;
+import ru.meridor.erp.ui.strategy.ReplacingUIStrategy;
+import ru.meridor.erp.ui.strategy.UIStrategyFactory;
 import ru.meridor.stecker.ResourcesWatcher;
 
 import java.nio.file.Path;

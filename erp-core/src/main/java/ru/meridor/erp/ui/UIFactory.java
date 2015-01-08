@@ -1,4 +1,4 @@
-package ru.meridor.erp.beans;
+package ru.meridor.erp.ui;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
