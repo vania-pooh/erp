@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <groupId>ru.meridor.erp</groupId>
+        <groupId>org.meridor.erp</groupId>
         <artifactId>erp</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
@@ -13,20 +13,20 @@
 
     <dependencies>
         <dependency>
-            <groupId>ru.meridor.erp</groupId>
+            <groupId>org.meridor.erp</groupId>
             <artifactId>erp-framework</artifactId>
         </dependency>
         <dependency>
-            <groupId>ru.meridor.steve</groupId>
+            <groupId>org.meridor.steve</groupId>
             <artifactId>steve-local</artifactId>
         </dependency>
         <dependency>
-            <groupId>ru.meridor.stecker</groupId>
+            <groupId>org.meridor.stecker</groupId>
             <artifactId>stecker-plugin-loader</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
         </dependency>
         <dependency>
             <groupId>com.zaxxer</groupId>
@@ -60,7 +60,7 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>ru.meridor.erp.Main</mainClass>
+                    <mainClass>org.meridor.erp.Main</mainClass>
                 </configuration>
             </plugin>
         </plugins>

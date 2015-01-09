@@ -6,8 +6,8 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <tx:annotation-driven transaction-manager="transactionManager"/>
-    <jpa:repositories base-package="ru.meridor.erp.persistence.repository"/>
-    <context:property-placeholder location="jdbc.properties"/>
+    <jpa:repositories base-package="org.meridor.erp.persistence.repository"/>
+    <context:property-placeholder location="classpath:jdbc.properties"/>
 
     <bean id="dataSourceConfig" class="com.zaxxer.hikari.HikariConfig">
         <property name="driverClassName" value="${jdbc.driverClassName}"/>
@@ -25,7 +25,11 @@
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" depends-on="flyway">
         <property name="dataSource" ref="dataSource"/>
         <property name="jpaVendorAdapter" ref="jpaVendorAdapter"/>
-        <property name="packagesToScan" value="ru.meridor.erp.persistence.model"/>
+        <property name="packagesToScan">
+            <array>
+                <value>org.meridor.erp.persistence.model</value>
+            </array>
+        </property>
     </bean>
 
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
