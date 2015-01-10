@@ -10,7 +10,11 @@ import org.springframework.core.io.Resource;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.net.URI;
-import java.nio.file.*;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Collections;
 
 public class UIFactory implements ApplicationContextAware {
@@ -50,7 +54,7 @@ public class UIFactory implements ApplicationContextAware {
             return fxmlLoader.load(inputStream);
         }
     }
-    
+
     public void reset() {
         fxmlLoader = applicationContext.getBean(FXMLLoader.class);
     }

@@ -1,6 +1,14 @@
-package org.meridor.erp.ui;
+package org.meridor.erp.plugins;
 
 import org.meridor.erp.annotation.Controller;
+import org.meridor.stecker.PluginException;
+import org.meridor.stecker.PluginLoader;
+import org.meridor.stecker.PluginMetadata;
+import org.meridor.stecker.PluginRegistry;
+import org.meridor.stecker.interfaces.Dependency;
+import org.meridor.stecker.interfaces.DependencyProblem;
+import org.meridor.steve.Job;
+import org.meridor.steve.annotations.JobCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -15,14 +23,6 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
-import org.meridor.stecker.PluginException;
-import org.meridor.stecker.PluginLoader;
-import org.meridor.stecker.PluginMetadata;
-import org.meridor.stecker.PluginRegistry;
-import org.meridor.stecker.interfaces.Dependency;
-import org.meridor.stecker.interfaces.DependencyProblem;
-import org.meridor.steve.Job;
-import org.meridor.steve.annotations.JobCollection;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -41,7 +41,7 @@ public class PluginLoaderBeanDefinitionRegistryPostProcessor implements BeanDefi
     private PluginRegistry pluginRegistry;
 
     private ApplicationEventPublisher eventPublisher;
-    
+
     private List<Class> implementations = new ArrayList<>();
 
     @Override
@@ -84,7 +84,7 @@ public class PluginLoaderBeanDefinitionRegistryPostProcessor implements BeanDefi
             throw new BeanDefinitionValidationException("Failed to load plugins", e);
         }
     }
-    
+
     protected PluginRegistry loadPlugins(Path pluginsDirectory, Class[] extensionPoints, String[] resourcesPatterns) throws PluginException {
         return PluginLoader
                 .withPluginDirectory(pluginsDirectory)
@@ -162,4 +162,5 @@ public class PluginLoaderBeanDefinitionRegistryPostProcessor implements BeanDefi
         ));
         eventPublisher.publishEvent(new PluginsLoadedEvent(this, resources));
     }
+    
 }

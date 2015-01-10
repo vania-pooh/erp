@@ -2,14 +2,14 @@ package org.meridor.erp.ui.dev;
 
 import javafx.application.Platform;
 import javafx.scene.Parent;
+import org.meridor.erp.plugins.PluginsLoadedEvent;
 import org.meridor.erp.ui.PluginUIProcessor;
-import org.meridor.erp.ui.PluginsLoadedEvent;
 import org.meridor.erp.ui.UIFactory;
 import org.meridor.erp.ui.strategy.ReplacingUIStrategy;
 import org.meridor.erp.ui.strategy.UIStrategyFactory;
+import org.meridor.stecker.ResourcesWatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.meridor.stecker.ResourcesWatcher;
 
 import java.nio.file.Path;
 import java.util.HashMap;
@@ -23,11 +23,11 @@ public class DevPluginUIProcessor extends PluginUIProcessor {
     private static final Logger LOG = LoggerFactory.getLogger(DevPluginUIProcessor.class);
 
     private ResourcesWatcher resourcesWatcher;
-    
+
     private final Map<Path, Parent> pluginUIMap = new HashMap<>();
-    
+
     private final Map<Path, ReplacingUIStrategy<Parent>> pluginUIFactoryMap = new HashMap<>();
-    
+
     public DevPluginUIProcessor(UIFactory uiFactory, Parent mainContainer) {
         super(uiFactory, mainContainer);
     }
@@ -65,7 +65,7 @@ public class DevPluginUIProcessor extends PluginUIProcessor {
             LOG.info("Did not start resources watcher because no resources were found");
         }
     }
-    
+
     private void onFXMLFileChange(Path fxmlFilePath) {
         Platform.runLater(() -> {
             Optional<Parent> uiCandidate = Optional.ofNullable(pluginUIMap.get(fxmlFilePath));

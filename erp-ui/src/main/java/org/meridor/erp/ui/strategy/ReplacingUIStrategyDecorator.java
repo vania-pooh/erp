@@ -11,9 +11,9 @@ import java.util.List;
 import java.util.Map;
 
 public class ReplacingUIStrategyDecorator<T extends Parent> implements ReplacingUIStrategy<T> {
-    
+
     private final UIStrategy<T> uiStrategy;
-    
+
     private final Map<T, List<Node>> uiNodes = new HashMap<>();
 
     public ReplacingUIStrategyDecorator(UIStrategy<T> uiStrategy) {

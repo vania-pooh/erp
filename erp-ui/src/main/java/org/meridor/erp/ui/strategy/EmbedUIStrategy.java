@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class EmbedUIStrategy implements UIStrategy<Embed> {
-    
+
     private final Parent mainContainer;
 
     public EmbedUIStrategy(Parent mainContainer) {
@@ -21,7 +21,7 @@ public class EmbedUIStrategy implements UIStrategy<Embed> {
     public void add(Embed ui) {
         List<Node> children = new ArrayList<>(ui.getChildren());
         Node container = getContainer(ui);
-        if (container instanceof Pane){
+        if (container instanceof Pane) {
             Pane pane = (Pane) container;
             ui.getChildren().removeAll(children);
             pane.getChildren().addAll(children);

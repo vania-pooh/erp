@@ -1,6 +1,7 @@
 package org.meridor.erp.ui;
 
 import javafx.fxml.FXMLLoader;
+import org.meridor.erp.plugins.UberClassLoader;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;

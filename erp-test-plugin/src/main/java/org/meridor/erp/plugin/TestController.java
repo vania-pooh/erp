@@ -6,7 +6,7 @@ import org.meridor.erp.annotation.Controller;
 @Controller
 public class TestController {
 
-    public void testMethod(MouseEvent mouseEvent){
+    public void testMethod(MouseEvent mouseEvent) {
         System.out.println("Good job!");
     }
 

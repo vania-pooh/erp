@@ -1,4 +1,4 @@
-package org.meridor.erp.ui;
+package org.meridor.erp.plugins;
 
 import org.springframework.context.ApplicationEvent;
 

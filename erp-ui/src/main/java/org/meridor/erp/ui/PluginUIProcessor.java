@@ -1,6 +1,7 @@
 package org.meridor.erp.ui;
 
 import javafx.scene.Parent;
+import org.meridor.erp.plugins.PluginsLoadedEvent;
 import org.meridor.erp.ui.strategy.UIStrategyFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

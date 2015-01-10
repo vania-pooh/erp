@@ -4,7 +4,6 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="fxmlLoaderFactory" class="org.meridor.erp.ui.FXMLLoaderFactory"/>
-    <bean id="uberClassLoader" class="org.meridor.erp.ui.UberClassLoader"/>
     <bean id="fxmlLoader" factory-bean="fxmlLoaderFactory" factory-method="getFXMLLoader" scope="prototype">
         <constructor-arg ref="uberClassLoader"/>
     </bean>
@@ -19,10 +18,9 @@
 
     <bean id="navigationController" class="org.meridor.erp.controller.NavigationController"/>
     <bean id="tabsController" class="org.meridor.erp.controller.TabsController"/>
-    
+
     <!-- Default beans -->
     <beans profile="default">
-        <bean class="org.meridor.erp.ui.PluginLoaderBeanDefinitionRegistryPostProcessor"/>
         <bean class="org.meridor.erp.ui.PluginUIProcessor">
             <constructor-arg index="0" ref="uiFactory"/>
             <constructor-arg index="1" ref="mainContainer"/>
@@ -31,7 +29,6 @@
 
     <!-- Development specific beans -->
     <beans profile="dev">
-        <bean class="org.meridor.erp.ui.dev.DevPluginLoaderBeanDefinitionRegistryPostProcessor"/>
         <bean class="org.meridor.erp.ui.dev.DevPluginUIProcessor" destroy-method="onDestroy">
             <constructor-arg index="0" ref="uiFactory"/>
             <constructor-arg index="1" ref="mainContainer"/>

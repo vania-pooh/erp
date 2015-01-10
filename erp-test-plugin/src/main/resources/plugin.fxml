@@ -2,7 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import org.meridor.erp.Embed?>
-
-<Embed to="somePanel" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.meridor.erp.plugin.TestController">
-   <Button id="anotherButton" text="AnotherButton" prefWidth="100" prefHeight="100" onMouseClicked="#testMethod"/>
+<Embed to="somePanel" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+       fx:controller="org.meridor.erp.plugin.TestController">
+    <Button id="anotherButton" text="AnotherButton" prefWidth="100" prefHeight="100" onMouseClicked="#testMethod"/>
 </Embed>

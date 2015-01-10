@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="uberClassLoader" class="org.meridor.erp.plugins.UberClassLoader"/>
+
+    <beans profile="default">
+        <bean class="org.meridor.erp.plugins.PluginLoaderBeanDefinitionRegistryPostProcessor"/>
+    </beans>
+
+    <beans profile="dev">
+        <bean class="org.meridor.erp.plugins.dev.DevPluginLoaderBeanDefinitionRegistryPostProcessor"/>
+    </beans>
+
+</beans>

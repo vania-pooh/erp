@@ -13,6 +13,7 @@
     <properties>
         <compiler.version>1.8</compiler.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spring.version>4.0.7.RELEASE</spring.version>
         <steve.version>1.0.0-SNAPSHOT</steve.version>
         <stecker.version>1.0.0-SNAPSHOT</stecker.version>
         <hikari-cp.version>2.2.5</hikari-cp.version>
@@ -31,12 +32,20 @@
         <module>erp-core</module>
         <module>erp-framework</module>
         <module>erp-test-plugin</module>
+        <module>erp-persistence</module>
+        <module>erp-ui</module>
+        <module>erp-plugin-engine</module>
     </modules>
 
     <dependencyManagement>
         <dependencies>
-            
+
             <!-- Modules -->
+            <dependency>
+                <groupId>org.meridor.erp</groupId>
+                <artifactId>erp-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.meridor.erp</groupId>
                 <artifactId>erp-framework</artifactId>
@@ -44,17 +53,33 @@
             </dependency>
             <dependency>
                 <groupId>org.meridor.erp</groupId>
-                <artifactId>erp-core</artifactId>
+                <artifactId>erp-persistence</artifactId>
                 <version>${project.version}</version>
             </dependency>
-            
+            <dependency>
+                <groupId>org.meridor.erp</groupId>
+                <artifactId>erp-plugin-engine</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.meridor.erp</groupId>
+                <artifactId>erp-ui</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- Spring -->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+
             <!-- Persistence -->
             <dependency>
                 <groupId>org.postgresql</groupId>
                 <artifactId>postgresql</artifactId>
                 <version>${postgresql-driver.version}</version>
             </dependency>
-            <!-- Hikari Connection Pooler -->
             <dependency>
                 <groupId>com.zaxxer</groupId>
                 <artifactId>HikariCP</artifactId>
@@ -111,6 +136,16 @@
             <!-- Logging -->
             <dependency>
                 <groupId>org.slf4j</groupId>
+                <artifactId>jcl-over-slf4j</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-log4j12</artifactId>
                 <version>${slf4j.version}</version>
             </dependency>
@@ -121,7 +156,6 @@
             </dependency>
 
             <!-- Steve -->
-            <!-- NOTE: this also determines Spring version as well as logging dependencies -->
             <dependency>
                 <groupId>org.meridor.steve</groupId>
                 <artifactId>steve-local</artifactId>
@@ -129,7 +163,6 @@
             </dependency>
 
             <!-- Stecker -->
-            <!-- TODO: we may want to remove this if Steve will be using Stecker directly -->
             <dependency>
                 <groupId>org.meridor.stecker</groupId>
                 <artifactId>stecker-plugin-loader</artifactId>
