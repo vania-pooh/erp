@@ -9,16 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>erp-ui</artifactId>
+    <artifactId>erp-accounting-model-plugin</artifactId>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.meridor.erp</groupId>
-            <artifactId>erp-plugin-engine</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.meridor.erp</groupId>
-            <artifactId>erp-framework</artifactId>
-        </dependency>
-    </dependencies>
+
 </project>

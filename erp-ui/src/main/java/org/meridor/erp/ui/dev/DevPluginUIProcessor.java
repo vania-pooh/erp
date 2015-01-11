@@ -18,6 +18,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static org.meridor.erp.io.StreamUtils.commaSeparated;
+
 public class DevPluginUIProcessor extends PluginUIProcessor {
 
     private static final Logger LOG = LoggerFactory.getLogger(DevPluginUIProcessor.class);
@@ -59,7 +61,7 @@ public class DevPluginUIProcessor extends PluginUIProcessor {
             resourcesWatcher.start();
             LOG.info(String.format(
                     "Started resources watcher for paths [%s]",
-                    fxmlFilePaths.stream().map(Path::toString).collect(Collectors.joining(", "))
+                    commaSeparated(fxmlFilePaths.stream().map(Path::toString))
             ));
         } else {
             LOG.info("Did not start resources watcher because no resources were found");

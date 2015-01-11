@@ -35,6 +35,7 @@
         <module>erp-persistence</module>
         <module>erp-ui</module>
         <module>erp-plugin-engine</module>
+        <module>erp-accounting-model-plugin</module>
     </modules>
 
     <dependencyManagement>

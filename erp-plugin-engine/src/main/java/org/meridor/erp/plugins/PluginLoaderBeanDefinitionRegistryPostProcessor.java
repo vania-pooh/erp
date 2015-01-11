@@ -1,6 +1,7 @@
 package org.meridor.erp.plugins;
 
 import org.meridor.erp.annotation.Controller;
+import org.meridor.erp.io.ResourceCategory;
 import org.meridor.stecker.PluginException;
 import org.meridor.stecker.PluginLoader;
 import org.meridor.stecker.PluginMetadata;
@@ -35,13 +36,11 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
+import static org.meridor.erp.io.StreamUtils.commaSeparated;
 import static org.springframework.beans.factory.support.AbstractBeanDefinition.AUTOWIRE_BY_TYPE;
 
 public class PluginLoaderBeanDefinitionRegistryPostProcessor extends ConfigurationClassPostProcessor implements BeanDefinitionRegistryPostProcessor, ApplicationEventPublisherAware, ApplicationListener<ContextRefreshedEvent> {
-
-    public static final String LIST_SEPARATOR = ", ";
 
     private static final Logger LOG = LoggerFactory.getLogger(PluginLoaderBeanDefinitionRegistryPostProcessor.class);
 
@@ -62,7 +61,7 @@ public class PluginLoaderBeanDefinitionRegistryPostProcessor extends Configurati
                     "Found %d implementations for %s extension point: [%s]",
                     implementations.size(),
                     extensionPoint.getCanonicalName(),
-                    implementations.stream().map(Class::getCanonicalName).collect(Collectors.joining(LIST_SEPARATOR))
+                    commaSeparated(implementations.stream().map(Class::getCanonicalName))
             ));
             for (Class implementation : implementations) {
                 processImplementation(registry, implementation);
@@ -73,7 +72,7 @@ public class PluginLoaderBeanDefinitionRegistryPostProcessor extends Configurati
         LOG.debug(String.format(
                 "Found %d resource files: [%s]",
                 resources.size(),
-                resources.stream().map(Path::toString).collect(Collectors.joining(LIST_SEPARATOR))
+                commaSeparated(resources.stream().map(Path::toString))
         ));
         setBeanClassLoader(beanClassLoader);
         super.postProcessBeanDefinitionRegistry(registry);
@@ -123,8 +122,8 @@ public class PluginLoaderBeanDefinitionRegistryPostProcessor extends Configurati
         LOG.info(String.format(
                 "Loading plugins from %s with extension points = [%s] and resource patterns = [%s]",
                 pluginsDirectory,
-                Arrays.stream(extensionPoints).map(Class::getCanonicalName).collect(Collectors.joining(LIST_SEPARATOR)),
-                Arrays.stream(resourcesPatterns).collect(Collectors.joining(", "))
+                commaSeparated(Arrays.stream(extensionPoints).map(Class::getCanonicalName)),
+                commaSeparated(resourcesPatterns)
         ));
 
         try {
@@ -158,16 +157,16 @@ public class PluginLoaderBeanDefinitionRegistryPostProcessor extends Configurati
             LOG.error("Dependency problem detected");
 
             if (!dependencyProblem.getMissingDependencies().isEmpty()) {
-                String missingDependencies = dependencyProblem.getMissingDependencies().stream()
-                        .map(Dependency::toString)
-                        .collect(Collectors.joining(LIST_SEPARATOR));
+                String missingDependencies = commaSeparated(
+                        dependencyProblem.getMissingDependencies().stream().map(Dependency::toString)
+                );
                 LOG.error(String.format("The following dependencies are missing: [%s]", missingDependencies));
             }
 
             if (!dependencyProblem.getConflictingDependencies().isEmpty()) {
-                String conflictingDependencies = dependencyProblem.getConflictingDependencies().stream()
-                        .map(Dependency::toString)
-                        .collect(Collectors.joining(LIST_SEPARATOR));
+                String conflictingDependencies = commaSeparated(
+                        dependencyProblem.getConflictingDependencies().stream().map(Dependency::toString)
+                );
                 LOG.error(String.format("This plugin conflicts with the following dependencies: [%s]", conflictingDependencies));
             }
         }
@@ -198,7 +197,8 @@ public class PluginLoaderBeanDefinitionRegistryPostProcessor extends Configurati
 
     private String[] getResourcesPatterns() {
         return new String[]{
-                "glob:**/*.fxml"
+                ResourceCategory.FXML_FILE.getGlob(),
+                ResourceCategory.SQL_MIGRATION.getGlob()
         };
     }
 
@@ -206,6 +206,7 @@ public class PluginLoaderBeanDefinitionRegistryPostProcessor extends Configurati
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
         beanFactory.setBeanClassLoader(beanClassLoader);
         beanFactory.addBeanPostProcessor(new PluginClassLoaderBeanPostProcessor(beanClassLoader));
+        beanFactory.addBeanPostProcessor(new FlywayBeanPostProcessor(pluginRegistry));
         super.postProcessBeanFactory(beanFactory);
     }
 

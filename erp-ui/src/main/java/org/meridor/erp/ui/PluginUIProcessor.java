@@ -1,6 +1,7 @@
 package org.meridor.erp.ui;
 
 import javafx.scene.Parent;
+import org.meridor.erp.io.ResourceCategory;
 import org.meridor.erp.plugins.PluginsLoadedEvent;
 import org.meridor.erp.ui.strategy.UIStrategyFactory;
 import org.slf4j.Logger;
@@ -50,7 +51,7 @@ public class PluginUIProcessor implements ApplicationListener<PluginsLoadedEvent
 
     protected static List<Path> getFXMLFiles(PluginsLoadedEvent pluginsLoadedEvent) {
         return pluginsLoadedEvent.getPluginRegistry().getResources().stream()
-                .filter(path -> path.toString().endsWith("fxml"))
+                .filter(path -> ResourceCategory.FXML_FILE.getPathMatcher().matches(path))
                 .collect(Collectors.toList());
     }
 
