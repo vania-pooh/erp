@@ -7,8 +7,8 @@ public class UberClassLoader extends ClassLoader {
 
     private Map<String, ClassLoader> classLoaders = new HashMap<>();
 
-    public void addMapping(String name, ClassLoader classLoader) {
-        classLoaders.put(name, classLoader);
+    public void addClass(Class someClass) {
+        classLoaders.put(someClass.getCanonicalName(), someClass.getClassLoader());
     }
 
     @Override

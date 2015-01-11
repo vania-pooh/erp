@@ -1,16 +1,18 @@
 package org.meridor.erp.plugins;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 
-import java.util.List;
-
 public class PluginClassLoaderBeanPostProcessor implements BeanPostProcessor {
 
-    private final List<Class> implementations;
+    private static final Logger LOG = LoggerFactory.getLogger(PluginClassLoaderBeanPostProcessor.class);
 
-    public PluginClassLoaderBeanPostProcessor(List<Class> implementations) {
-        this.implementations = implementations;
+    private final UberClassLoader uberClassLoader;
+
+    public PluginClassLoaderBeanPostProcessor(UberClassLoader uberClassLoader) {
+        this.uberClassLoader = uberClassLoader;
     }
 
     @Override
@@ -21,9 +23,8 @@ public class PluginClassLoaderBeanPostProcessor implements BeanPostProcessor {
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
         if (bean instanceof UberClassLoader) {
-            for (Class implementation : implementations) {
-                ((UberClassLoader) bean).addMapping(implementation.getCanonicalName(), implementation.getClassLoader());
-            }
+            LOG.debug("Returning bean class loader as UberClassLoader instance");
+            return uberClassLoader;
         }
         return bean;
     }

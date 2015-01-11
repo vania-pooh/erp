@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationListener;
 
 import java.nio.file.Path;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class PluginUIProcessor implements ApplicationListener<PluginsLoadedEvent> {
 
@@ -29,7 +31,7 @@ public class PluginUIProcessor implements ApplicationListener<PluginsLoadedEvent
     @Override
     public void onApplicationEvent(PluginsLoadedEvent pluginsLoadedEvent) {
         try {
-            for (Path fxmlFilePath : pluginsLoadedEvent.getFxmlFiles()) {
+            for (Path fxmlFilePath : getFXMLFiles(pluginsLoadedEvent)) {
                 LOG.debug(String.format(
                         "Processing resource file %s",
                         fxmlFilePath.toString()
@@ -44,6 +46,12 @@ public class PluginUIProcessor implements ApplicationListener<PluginsLoadedEvent
 
     protected Parent getMainContainer() {
         return mainContainer;
+    }
+
+    protected static List<Path> getFXMLFiles(PluginsLoadedEvent pluginsLoadedEvent) {
+        return pluginsLoadedEvent.getPluginRegistry().getResources().stream()
+                .filter(path -> path.toString().endsWith("fxml"))
+                .collect(Collectors.toList());
     }
 
 }

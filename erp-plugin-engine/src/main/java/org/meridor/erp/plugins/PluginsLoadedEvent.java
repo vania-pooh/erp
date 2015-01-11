@@ -1,20 +1,18 @@
 package org.meridor.erp.plugins;
 
+import org.meridor.stecker.PluginRegistry;
 import org.springframework.context.ApplicationEvent;
-
-import java.nio.file.Path;
-import java.util.List;
 
 public class PluginsLoadedEvent extends ApplicationEvent {
 
-    private List<Path> fxmlFiles;
+    private final PluginRegistry pluginRegistry;
 
-    public PluginsLoadedEvent(Object source, List<Path> fxmlFiles) {
+    public PluginsLoadedEvent(Object source, PluginRegistry pluginRegistry) {
         super(source);
-        this.fxmlFiles = fxmlFiles;
+        this.pluginRegistry = pluginRegistry;
     }
 
-    public List<Path> getFxmlFiles() {
-        return fxmlFiles;
+    public PluginRegistry getPluginRegistry() {
+        return pluginRegistry;
     }
 }

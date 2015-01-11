@@ -18,6 +18,10 @@
         </dependency>
         <dependency>
             <groupId>org.meridor.erp</groupId>
+            <artifactId>erp-persistence</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.meridor.erp</groupId>
             <artifactId>erp-core</artifactId>
         </dependency>
         <dependency>

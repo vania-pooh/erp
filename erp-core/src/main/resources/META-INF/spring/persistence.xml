@@ -26,11 +26,13 @@
           depends-on="flyway">
         <property name="dataSource" ref="dataSource"/>
         <property name="jpaVendorAdapter" ref="jpaVendorAdapter"/>
-        <property name="packagesToScan">
-            <array>
-                <value>org.meridor.erp.persistence.model</value>
-            </array>
+        <property name="persistenceUnitPostProcessors">
+            <list>
+                <bean id="pluginPersistenceUnitPostProcessor"
+                      class="org.meridor.erp.persistence.PluginPersistenceUnitPostProcessor"/>
+            </list>
         </property>
+        <property name="beanClassLoader" ref="uberClassLoader"/>
     </bean>
 
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">

@@ -35,7 +35,7 @@ public class DevPluginUIProcessor extends PluginUIProcessor {
     @Override
     public void onApplicationEvent(PluginsLoadedEvent pluginsLoadedEvent) {
 
-        List<Path> fxmlFilePaths = pluginsLoadedEvent.getFxmlFiles();
+        List<Path> fxmlFilePaths = getFXMLFiles(pluginsLoadedEvent);
         try {
             for (Path fxmlFilePath : fxmlFilePaths) {
                 LOG.info("Using development plugin UI processor with refresh support");

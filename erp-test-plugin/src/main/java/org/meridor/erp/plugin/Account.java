@@ -1,4 +1,4 @@
-package org.meridor.erp.persistence.model;
+package org.meridor.erp.plugin;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
