@@ -22,6 +22,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ConfigurationClassPostProcessor;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.data.jpa.repository.support.JpaRepositoryFactoryBean;
 import org.springframework.data.repository.Repository;
@@ -38,7 +39,7 @@ import java.util.stream.Collectors;
 
 import static org.springframework.beans.factory.support.AbstractBeanDefinition.AUTOWIRE_BY_TYPE;
 
-public class PluginLoaderBeanDefinitionRegistryPostProcessor implements BeanDefinitionRegistryPostProcessor, ApplicationEventPublisherAware, ApplicationListener<ContextRefreshedEvent> {
+public class PluginLoaderBeanDefinitionRegistryPostProcessor extends ConfigurationClassPostProcessor implements BeanDefinitionRegistryPostProcessor, ApplicationEventPublisherAware, ApplicationListener<ContextRefreshedEvent> {
 
     public static final String LIST_SEPARATOR = ", ";
 
@@ -74,7 +75,8 @@ public class PluginLoaderBeanDefinitionRegistryPostProcessor implements BeanDefi
                 resources.size(),
                 resources.stream().map(Path::toString).collect(Collectors.joining(LIST_SEPARATOR))
         ));
-
+        setBeanClassLoader(beanClassLoader);
+        super.postProcessBeanDefinitionRegistry(registry);
     }
 
     private void processImplementation(BeanDefinitionRegistry registry, Class implementation) {
@@ -98,13 +100,13 @@ public class PluginLoaderBeanDefinitionRegistryPostProcessor implements BeanDefi
         registry.registerBeanDefinition(beanName, beanDefinition);
     }
 
-    private void processRepositoryInterface(BeanDefinitionRegistry registry, Class implementation) {
-        LOG.debug(String.format("Registering bean definition for repository interface %s", implementation.getCanonicalName()));
-        String beanName = Introspector.decapitalize(implementation.getSimpleName());
+    private void processRepositoryInterface(BeanDefinitionRegistry registry, Class repositoryInterface) {
+        LOG.debug(String.format("Registering bean definition for repository interface %s", repositoryInterface.getCanonicalName()));
+        String beanName = Introspector.decapitalize(repositoryInterface.getSimpleName());
         GenericBeanDefinition beanDefinition = new GenericBeanDefinition();
         beanDefinition.setBeanClass(JpaRepositoryFactoryBean.class);
         MutablePropertyValues mutablePropertyValues = new MutablePropertyValues();
-        mutablePropertyValues.add("repositoryInterface", implementation);
+        mutablePropertyValues.add("repositoryInterface", repositoryInterface);
         beanDefinition.setPropertyValues(mutablePropertyValues);
         registry.registerBeanDefinition(beanName, beanDefinition);
     }
@@ -204,6 +206,7 @@ public class PluginLoaderBeanDefinitionRegistryPostProcessor implements BeanDefi
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
         beanFactory.setBeanClassLoader(beanClassLoader);
         beanFactory.addBeanPostProcessor(new PluginClassLoaderBeanPostProcessor(beanClassLoader));
+        super.postProcessBeanFactory(beanFactory);
     }
 
     @Override
