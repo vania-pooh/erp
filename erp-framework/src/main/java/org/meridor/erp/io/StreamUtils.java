@@ -9,11 +9,11 @@ public final class StreamUtils {
     public static final String LIST_SEPARATOR = ", ";
 
     public static String commaSeparated(Stream<String> stream) {
-        return stream.collect(Collectors.joining(LIST_SEPARATOR)); 
+        return stream.collect(Collectors.joining(LIST_SEPARATOR));
     }
-    
+
     public static String commaSeparated(String[] strings) {
         return commaSeparated(Arrays.stream(strings));
     }
-    
+
 }

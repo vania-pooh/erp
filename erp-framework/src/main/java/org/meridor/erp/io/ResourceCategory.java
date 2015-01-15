@@ -4,7 +4,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.PathMatcher;
 
 public enum ResourceCategory {
-    
+
     FXML_FILE("glob:**/*.fxml"),
     SQL_MIGRATION("glob:**/db/migration/V*.sql");
 
@@ -17,7 +17,7 @@ public enum ResourceCategory {
     public String getGlob() {
         return glob;
     }
-    
+
     public PathMatcher getPathMatcher() {
         return FileSystems.getDefault().getPathMatcher(glob);
     }

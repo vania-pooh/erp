@@ -29,6 +29,10 @@
             <artifactId>spring-context</artifactId>
         </dependency>
         <dependency>
+            <groupId>io.airlift</groupId>
+            <artifactId>airline</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.meridor.steve</groupId>
             <artifactId>steve-local</artifactId>
         </dependency>
@@ -59,6 +63,8 @@
                     <archive>
                         <manifest>
                             <mainClass>org.meridor.erp.Main</mainClass>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
                         </manifest>
                     </archive>
                 </configuration>

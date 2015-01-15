@@ -170,6 +170,13 @@
                 <version>${stecker.version}</version>
             </dependency>
 
+            <!-- Misc -->
+            <dependency>
+                <groupId>io.airlift</groupId>
+                <artifactId>airline</artifactId>
+                <version>0.7</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

@@ -14,9 +14,9 @@ import java.util.stream.Collectors;
 import static org.meridor.erp.io.StreamUtils.commaSeparated;
 
 public class FlywayBeanPostProcessor implements BeanPostProcessor {
-    
+
     private static final Logger LOG = LoggerFactory.getLogger(FlywayBeanPostProcessor.class);
-    
+
     private final PluginRegistry pluginRegistry;
 
     public FlywayBeanPostProcessor(PluginRegistry pluginRegistry) {
@@ -35,7 +35,7 @@ public class FlywayBeanPostProcessor implements BeanPostProcessor {
         }
         return bean;
     }
-    
+
     private String[] getFlywayLocations() {
         List<String> migrationLocations = pluginRegistry.getResources().stream()
                 .filter(path -> ResourceCategory.SQL_MIGRATION.getPathMatcher().matches(path))

@@ -4,8 +4,9 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <import resource="classpath:META-INF/spring/launch-local-config.xml"/>
+    <import resource="classpath:META-INF/spring/startup.xml"/>
+    <import resource="classpath:META-INF/spring/persistence.xml"/>
     <import resource="classpath:META-INF/spring/plugin-engine.xml"/>
     <import resource="classpath:META-INF/spring/ui.xml"/>
-    <import resource="classpath:META-INF/spring/persistence.xml"/>
 
 </beans>
