@@ -1,0 +1,98 @@
+#----------------------------------------------------
+# This is a temporary file. To be moved to wiki. :) |
+#----------------------------------------------------
+
+# Организации
+counterparties - контрагенты (id, display_name), таблица-родитель для organizations и employees (http://stackoverflow.com/questions/10068033/postgresql-foreign-key-referencing-primary-keys-of-two-different-tables)
+companies extends counterparts - компании (id, short_name, full_name, display_name, registry_id = огрн, tax_number = инн, fiscal_code = кпп, registration_date, fiscal_authority_code (код налоговой), fiscal_authority_id (ссылка на company_id налоговой), pension_fund_number (регистрационный номер ПФР), pension_fund_code (company_id пенсионного фонда), social_insurance_fund_number (регистрационный номер ФСС), social_insurance_fund_id (company_id пенсионного фонда), type, property_form, main_activity, statistics_code (ОКПО), statistics_branch_id (company_id отделения статистики), territory_id (ОКАТО), municipality_id (ОКТМО), main_currency_id)
+company_settings - company_id, key, value = различные специальные настройки компаний (например, применение УСН или является ли крупнейшим налогоплательщиком или ведем ли мы бухгалтерию для этой компании)
+
+# Сотрудники
+identity_cards - удостоверения личности (id, type, series, number, issuer, issuer_code, issue_date, valid_until)
+persons - физические лица (person_id, name, surname, parental name, mark (дополнительная пометка для однофамильцев), identity_card_id, birthplace_id, birth_date, citizenship_id, work_phone, home_phone)
+counterpart_addresses - адреса физического или юридического лица (id, type (контактный, юридический, адрес проживания и т.п.), address_id)
+posts - должности (id, name, display_name)
+departments - id, name, parent_id
+employees - сотрудники (employee_id, company_id, person_id, post_id, gross_pay = зарплата до налогов, advance_percent = процент аванса, employment_status = вид занятости, внешнее совместительство и т.п., hired_date = дата приема, fired_date = дата увольнения, visible)
+references - справки по сотруднику (id, type, date, user_id)
+addresses - address_id, location_id, zip_code, street_name, street_number, numeric_suffix (корпус), letter_suffix (литер), apartment_number, apartment_type (офис, квартира и т.п.)
+
+# Отчеты
+reports - список отчетов (id, название, тип, статус, дата создания \ изменения, query = JPQL или Class#method)
+reports_data - сохраненные отчеты (id, data = json \ xml)
+
+# Банк и касса
+banks - список банков (bank_id (БИК), name, correspondent_account_number, location_id)
+bank_accounts - список банковских счетов контрагентов (id, counterparts_id, тип - валютный или расчетный или специальный, номер, bank_id)
+payments - платежи физическим лицам и организациям (from_account_id, to_account_id, type, amount, status (оплачено или нет)), включают платежи в бюджет (взносы в фонды, налоги, штрафы, пени и т.п.) = на основе этой таблицы показываем платежные поручения, требования и выписки
+payment_types - id, name (статьи движения денежных средств и затрат)
+budget_payments - дополнительная информация о бюджетном платеже (payment_id, budget_classification_code, reason_id, fiscal_period (зашифрованный тип периода и данные), document_id, document_date)
+budget_payment_reasons - id, name, display_name (основания платежа в бюджет)
+budget_classification_codes - список КБК (code, name, display_name, company_id (государственная организация, которой идет платеж))
+
+# Зарплата
+salary - salary_id, employee_id, currency_id, type (аванс или зарплата), way (банк или касса), year (за какой год), month (за какой месяц), date, amount (конкретная выплата зарплаты сотруднику за конкретный месяц), user_id (кто провел)
+
+# Налоги
+taxes - tax_id, name, type, time_interval, rate
+company_taxes - company_id, tax_id (к компании применяются все указанные тут налоги)
+tax_authorities - налоговые органы и фонды = authority_id, company_id
+company_tax_authorities - company_id, authority_id, from_date, to_date
+tax_types - виды налогов (tax_type, name)
+tax_deductions - налоговые вычеты (id, tax_id, name, amount), вычисление - в логике приложения
+movement_types - виды движений денежных средств (виды доходов \ расходов) = id, name, type (revenue \ expense), parent_id
+
+
+# Audit (via Spring aspects)
+counterpart_audit - event_id, counterpart_id, key, value, from_date, to_date (переводы на должность, увольнения, принятия на работу, изменения зарплаты и т.п.)
+
+# Покупки и продажи
+currencies = id, name, code, short_name (список валют)
+currencies_exchange = from_id, to_id, rate
+company_currencies - company_id, currency_id
+units - единицы измерения (штуки, литры, граммы)
+products - товары (id, name, price, group_id) = номенклатура
+product_groups - группы товаров (id, name, parent_id)
+bills - счета (id, from_id, to_id, expiry_date) = общая сумма считается автоматически
+bill_contents - bill_id, product_id, count
+invoices - счета-фактуры = bill_id, date
+
+# Складское дело
+warehouses = id, name
+warehouse_state = warehouse_id, product_id, quantity
+warehouse_audit = id, warehouse_id, type (оприходование, перемещение, списание, инвентаризация), date
+warehouse_audit_details = audit_id, product_id, quantity, comments
+
+# Основные средства и НМА
+Аналогично складу + амортизация
+
+# Разное
+attorneys - доверенности (company_id, employee_id, create_date, from_date, duration, to_date, transferable, template_id)
+commands - приказы по организации (company_id, employee_id, date, type, template_id)
+contracts - договоры (company_id, counterpart_id, template_id, date, type)
+document_templates - id, path_to_file (*.odt или *.rtf с ${data} строками)
+zip_codes - почтовые индексы (code, location_id)
+countries - id, name
+regions - id, name, country_id
+areas - id, name, region_id, country_id (районы областей)
+locations - id, name, area_id, region_id, country_id
+company_type_codes - коды ОКОПФ (организационно-правовая форма), (id, name, display_name)
+property_form_codes - коды ОКФС (форма собственности), (id, name, display_name)
+activity_codes - коды ОКВЭД, (id, name, display_name)
+>>>==========<<<
+
+
+# Бахгалтерские счета
+accounts - бухгалтерские счета и субсчета (id, название, цифровой код, единица измерения, parent_id)
+account_transactions - проводки по всем счетам (group_id, дебет, кредит, сумма, date). group_id нужно для того, чтобы делать сложные проводки из нескольких строк
+
+# Настройки и интерфейс
+events - входящие и исходящие уведомления (id, type, date, priority, status), включает в себя задачи для рабочего стола. type - хранит в себе тип события и направление движения (входящее или исходящее)
+event_flags - флаги на событиях (важное, напомнить позже и т.п.) = (event_id, flag_id)
+flags - все доступные флаги (flag_id, company_id, name, display_name)
+settings - настройки приложения (key, value), включает в себя настройки расположения окон
+
+# Пользователи
+users - user_id, login, password (hash), salt, person_id
+roles - role_id, role_name, display_name
+user_roles - user_id, role_id
