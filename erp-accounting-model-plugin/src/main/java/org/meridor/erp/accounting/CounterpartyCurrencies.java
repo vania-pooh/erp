@@ -11,7 +11,7 @@ import javax.persistence.Table;
 @IdClass(CounterpartyCurrenciesPK.class)
 public class CounterpartyCurrencies {
     private int counterpartyId;
-    private int currencyId;
+    private short currencyId;
 
     @Id
     @Column(name = "counterparty_id")
@@ -25,11 +25,11 @@ public class CounterpartyCurrencies {
 
     @Id
     @Column(name = "currency_id")
-    public int getCurrencyId() {
+    public short getCurrencyId() {
         return currencyId;
     }
 
-    public void setCurrencyId(int currencyId) {
+    public void setCurrencyId(short currencyId) {
         this.currencyId = currencyId;
     }
 
@@ -49,7 +49,7 @@ public class CounterpartyCurrencies {
     @Override
     public int hashCode() {
         int result = counterpartyId;
-        result = 31 * result + currencyId;
+        result = 31 * result + (int) currencyId;
         return result;
     }
 }

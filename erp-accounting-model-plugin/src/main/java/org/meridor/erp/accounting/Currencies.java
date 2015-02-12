@@ -7,18 +7,17 @@ import javax.persistence.Id;
 
 @Entity
 public class Currencies {
-    private int currencyId;
+    private short currencyId;
     private String code;
-    private String name;
     private String displayName;
 
     @Id
     @Column(name = "currency_id")
-    public int getCurrencyId() {
+    public short getCurrencyId() {
         return currencyId;
     }
 
-    public void setCurrencyId(int currencyId) {
+    public void setCurrencyId(short currencyId) {
         this.currencyId = currencyId;
     }
 
@@ -30,16 +29,6 @@ public class Currencies {
 
     public void setCode(String code) {
         this.code = code;
-    }
-
-    @Basic
-    @Column(name = "name")
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     @Basic
@@ -62,16 +51,14 @@ public class Currencies {
         if (currencyId != that.currencyId) return false;
         if (code != null ? !code.equals(that.code) : that.code != null) return false;
         if (displayName != null ? !displayName.equals(that.displayName) : that.displayName != null) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = currencyId;
+        int result = (int) currencyId;
         result = 31 * result + (code != null ? code.hashCode() : 0);
-        result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (displayName != null ? displayName.hashCode() : 0);
         return result;
     }

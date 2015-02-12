@@ -11,7 +11,8 @@ import java.sql.Date;
 @Table(name = "budget_payments", schema = "public", catalog = "erp")
 public class BudgetPayments {
     private int paymentId;
-    private long budgetClassificationCode;
+    private int budgetAdministratorCode;
+    private int budgetClassificationCode;
     private int reasonId;
     private String fiscalPeriod;
     private Integer documentId;
@@ -28,12 +29,22 @@ public class BudgetPayments {
     }
 
     @Basic
+    @Column(name = "budget_administrator_code")
+    public int getBudgetAdministratorCode() {
+        return budgetAdministratorCode;
+    }
+
+    public void setBudgetAdministratorCode(int budgetAdministratorCode) {
+        this.budgetAdministratorCode = budgetAdministratorCode;
+    }
+
+    @Basic
     @Column(name = "budget_classification_code")
-    public long getBudgetClassificationCode() {
+    public int getBudgetClassificationCode() {
         return budgetClassificationCode;
     }
 
-    public void setBudgetClassificationCode(long budgetClassificationCode) {
+    public void setBudgetClassificationCode(int budgetClassificationCode) {
         this.budgetClassificationCode = budgetClassificationCode;
     }
 
@@ -84,6 +95,7 @@ public class BudgetPayments {
 
         BudgetPayments that = (BudgetPayments) o;
 
+        if (budgetAdministratorCode != that.budgetAdministratorCode) return false;
         if (budgetClassificationCode != that.budgetClassificationCode) return false;
         if (paymentId != that.paymentId) return false;
         if (reasonId != that.reasonId) return false;
@@ -97,7 +109,8 @@ public class BudgetPayments {
     @Override
     public int hashCode() {
         int result = paymentId;
-        result = 31 * result + (int) (budgetClassificationCode ^ (budgetClassificationCode >>> 32));
+        result = 31 * result + budgetAdministratorCode;
+        result = 31 * result + budgetClassificationCode;
         result = 31 * result + reasonId;
         result = 31 * result + (fiscalPeriod != null ? fiscalPeriod.hashCode() : 0);
         result = 31 * result + (documentId != null ? documentId.hashCode() : 0);

@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 public class CounterpartyCurrenciesPK implements Serializable {
     private int counterpartyId;
-    private int currencyId;
+    private short currencyId;
 
     @Column(name = "counterparty_id")
     @Id
@@ -20,11 +20,11 @@ public class CounterpartyCurrenciesPK implements Serializable {
 
     @Column(name = "currency_id")
     @Id
-    public int getCurrencyId() {
+    public short getCurrencyId() {
         return currencyId;
     }
 
-    public void setCurrencyId(int currencyId) {
+    public void setCurrencyId(short currencyId) {
         this.currencyId = currencyId;
     }
 
@@ -44,7 +44,7 @@ public class CounterpartyCurrenciesPK implements Serializable {
     @Override
     public int hashCode() {
         int result = counterpartyId;
-        result = 31 * result + currencyId;
+        result = 31 * result + (int) currencyId;
         return result;
     }
 }

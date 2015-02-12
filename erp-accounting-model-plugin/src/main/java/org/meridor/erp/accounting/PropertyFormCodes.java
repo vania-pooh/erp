@@ -5,32 +5,22 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.math.BigInteger;
 
 @Entity
 @Table(name = "property_form_codes", schema = "public", catalog = "erp")
 public class PropertyFormCodes {
-    private int code;
-    private String name;
+    private BigInteger code;
     private String displayName;
 
     @Id
     @Column(name = "code")
-    public int getCode() {
+    public BigInteger getCode() {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(BigInteger code) {
         this.code = code;
-    }
-
-    @Basic
-    @Column(name = "name")
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     @Basic
@@ -50,17 +40,15 @@ public class PropertyFormCodes {
 
         PropertyFormCodes that = (PropertyFormCodes) o;
 
-        if (code != that.code) return false;
+        if (code != null ? !code.equals(that.code) : that.code != null) return false;
         if (displayName != null ? !displayName.equals(that.displayName) : that.displayName != null) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = code;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
+        int result = code != null ? code.hashCode() : 0;
         result = 31 * result + (displayName != null ? displayName.hashCode() : 0);
         return result;
     }

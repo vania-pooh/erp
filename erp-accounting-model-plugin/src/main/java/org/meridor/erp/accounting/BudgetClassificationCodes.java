@@ -9,28 +9,18 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "budget_classification_codes", schema = "public", catalog = "erp")
 public class BudgetClassificationCodes {
-    private long code;
-    private String name;
+    private int code;
     private String displayName;
+    private short level;
 
     @Id
     @Column(name = "code")
-    public long getCode() {
+    public int getCode() {
         return code;
     }
 
-    public void setCode(long code) {
+    public void setCode(int code) {
         this.code = code;
-    }
-
-    @Basic
-    @Column(name = "name")
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     @Basic
@@ -43,6 +33,16 @@ public class BudgetClassificationCodes {
         this.displayName = displayName;
     }
 
+    @Basic
+    @Column(name = "level")
+    public short getLevel() {
+        return level;
+    }
+
+    public void setLevel(short level) {
+        this.level = level;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -51,17 +51,17 @@ public class BudgetClassificationCodes {
         BudgetClassificationCodes that = (BudgetClassificationCodes) o;
 
         if (code != that.code) return false;
+        if (level != that.level) return false;
         if (displayName != null ? !displayName.equals(that.displayName) : that.displayName != null) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (code ^ (code >>> 32));
-        result = 31 * result + (name != null ? name.hashCode() : 0);
+        int result = code;
         result = 31 * result + (displayName != null ? displayName.hashCode() : 0);
+        result = 31 * result + (int) level;
         return result;
     }
 }

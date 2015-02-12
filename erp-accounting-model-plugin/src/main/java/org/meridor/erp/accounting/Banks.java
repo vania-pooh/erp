@@ -8,9 +8,8 @@ import javax.persistence.Id;
 @Entity
 public class Banks {
     private int bankId;
-    private String name;
-    private long correspondentAccountNumber;
-    private int locationId;
+    private int companyId;
+    private int correspondentAccountNumber;
     private Integer parentId;
 
     @Id
@@ -24,33 +23,23 @@ public class Banks {
     }
 
     @Basic
-    @Column(name = "name")
-    public String getName() {
-        return name;
+    @Column(name = "company_id")
+    public int getCompanyId() {
+        return companyId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCompanyId(int companyId) {
+        this.companyId = companyId;
     }
 
     @Basic
     @Column(name = "correspondent_account_number")
-    public long getCorrespondentAccountNumber() {
+    public int getCorrespondentAccountNumber() {
         return correspondentAccountNumber;
     }
 
-    public void setCorrespondentAccountNumber(long correspondentAccountNumber) {
+    public void setCorrespondentAccountNumber(int correspondentAccountNumber) {
         this.correspondentAccountNumber = correspondentAccountNumber;
-    }
-
-    @Basic
-    @Column(name = "location_id")
-    public int getLocationId() {
-        return locationId;
-    }
-
-    public void setLocationId(int locationId) {
-        this.locationId = locationId;
     }
 
     @Basic
@@ -71,9 +60,8 @@ public class Banks {
         Banks banks = (Banks) o;
 
         if (bankId != banks.bankId) return false;
+        if (companyId != banks.companyId) return false;
         if (correspondentAccountNumber != banks.correspondentAccountNumber) return false;
-        if (locationId != banks.locationId) return false;
-        if (name != null ? !name.equals(banks.name) : banks.name != null) return false;
         if (parentId != null ? !parentId.equals(banks.parentId) : banks.parentId != null) return false;
 
         return true;
@@ -82,9 +70,8 @@ public class Banks {
     @Override
     public int hashCode() {
         int result = bankId;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (int) (correspondentAccountNumber ^ (correspondentAccountNumber >>> 32));
-        result = 31 * result + locationId;
+        result = 31 * result + companyId;
+        result = 31 * result + correspondentAccountNumber;
         result = 31 * result + (parentId != null ? parentId.hashCode() : 0);
         return result;
     }

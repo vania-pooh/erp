@@ -7,28 +7,28 @@ import javax.persistence.Id;
 
 @Entity
 public class Units {
-    private int unitId;
-    private String name;
+    private short unitId;
+    private String shortName;
     private String displayName;
 
     @Id
     @Column(name = "unit_id")
-    public int getUnitId() {
+    public short getUnitId() {
         return unitId;
     }
 
-    public void setUnitId(int unitId) {
+    public void setUnitId(short unitId) {
         this.unitId = unitId;
     }
 
     @Basic
-    @Column(name = "name")
-    public String getName() {
-        return name;
+    @Column(name = "short_name")
+    public String getShortName() {
+        return shortName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
     }
 
     @Basic
@@ -50,15 +50,15 @@ public class Units {
 
         if (unitId != units.unitId) return false;
         if (displayName != null ? !displayName.equals(units.displayName) : units.displayName != null) return false;
-        if (name != null ? !name.equals(units.name) : units.name != null) return false;
+        if (shortName != null ? !shortName.equals(units.shortName) : units.shortName != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = unitId;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
+        int result = (int) unitId;
+        result = 31 * result + (shortName != null ? shortName.hashCode() : 0);
         result = 31 * result + (displayName != null ? displayName.hashCode() : 0);
         return result;
     }

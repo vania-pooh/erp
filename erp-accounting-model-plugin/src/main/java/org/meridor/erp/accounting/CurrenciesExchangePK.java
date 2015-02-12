@@ -6,27 +6,27 @@ import java.io.Serializable;
 import java.sql.Date;
 
 public class CurrenciesExchangePK implements Serializable {
-    private int fromId;
-    private int toId;
+    private short fromId;
+    private short toId;
     private Date actualOn;
 
     @Column(name = "from_id")
     @Id
-    public int getFromId() {
+    public short getFromId() {
         return fromId;
     }
 
-    public void setFromId(int fromId) {
+    public void setFromId(short fromId) {
         this.fromId = fromId;
     }
 
     @Column(name = "to_id")
     @Id
-    public int getToId() {
+    public short getToId() {
         return toId;
     }
 
-    public void setToId(int toId) {
+    public void setToId(short toId) {
         this.toId = toId;
     }
 
@@ -56,8 +56,8 @@ public class CurrenciesExchangePK implements Serializable {
 
     @Override
     public int hashCode() {
-        int result = fromId;
-        result = 31 * result + toId;
+        int result = (int) fromId;
+        result = 31 * result + (int) toId;
         result = 31 * result + (actualOn != null ? actualOn.hashCode() : 0);
         return result;
     }

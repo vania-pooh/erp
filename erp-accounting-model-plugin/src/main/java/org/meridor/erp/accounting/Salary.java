@@ -9,7 +9,7 @@ import javax.persistence.Id;
 public class Salary {
     private int salaryId;
     private int employeeId;
-    private int currencyId;
+    private short currencyId;
     private String salaryType;
     private String way;
     private int year;
@@ -39,11 +39,11 @@ public class Salary {
 
     @Basic
     @Column(name = "currency_id")
-    public int getCurrencyId() {
+    public short getCurrencyId() {
         return currencyId;
     }
 
-    public void setCurrencyId(int currencyId) {
+    public void setCurrencyId(short currencyId) {
         this.currencyId = currencyId;
     }
 
@@ -133,7 +133,7 @@ public class Salary {
         long temp;
         result = salaryId;
         result = 31 * result + employeeId;
-        result = 31 * result + currencyId;
+        result = 31 * result + (int) currencyId;
         result = 31 * result + (salaryType != null ? salaryType.hashCode() : 0);
         result = 31 * result + (way != null ? way.hashCode() : 0);
         result = 31 * result + year;

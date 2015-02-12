@@ -12,28 +12,28 @@ import java.sql.Date;
 @Table(name = "currencies_exchange", schema = "public", catalog = "erp")
 @IdClass(CurrenciesExchangePK.class)
 public class CurrenciesExchange {
-    private int fromId;
-    private int toId;
+    private short fromId;
+    private short toId;
     private Date actualOn;
     private double rate;
 
     @Id
     @Column(name = "from_id")
-    public int getFromId() {
+    public short getFromId() {
         return fromId;
     }
 
-    public void setFromId(int fromId) {
+    public void setFromId(short fromId) {
         this.fromId = fromId;
     }
 
     @Id
     @Column(name = "to_id")
-    public int getToId() {
+    public short getToId() {
         return toId;
     }
 
-    public void setToId(int toId) {
+    public void setToId(short toId) {
         this.toId = toId;
     }
 
@@ -76,8 +76,8 @@ public class CurrenciesExchange {
     public int hashCode() {
         int result;
         long temp;
-        result = fromId;
-        result = 31 * result + toId;
+        result = (int) fromId;
+        result = 31 * result + (int) toId;
         result = 31 * result + (actualOn != null ? actualOn.hashCode() : 0);
         temp = Double.doubleToLongBits(rate);
         result = 31 * result + (int) (temp ^ (temp >>> 32));

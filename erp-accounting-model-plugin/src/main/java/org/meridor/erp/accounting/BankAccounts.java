@@ -13,7 +13,7 @@ public class BankAccounts {
     private int bankId;
     private int counterpartyId;
     private String accountType;
-    private long number;
+    private int number;
 
     @Id
     @Column(name = "account_id")
@@ -57,11 +57,11 @@ public class BankAccounts {
 
     @Basic
     @Column(name = "number")
-    public long getNumber() {
+    public int getNumber() {
         return number;
     }
 
-    public void setNumber(long number) {
+    public void setNumber(int number) {
         this.number = number;
     }
 
@@ -87,7 +87,7 @@ public class BankAccounts {
         result = 31 * result + bankId;
         result = 31 * result + counterpartyId;
         result = 31 * result + (accountType != null ? accountType.hashCode() : 0);
-        result = 31 * result + (int) (number ^ (number >>> 32));
+        result = 31 * result + number;
         return result;
     }
 }

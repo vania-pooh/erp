@@ -4,24 +4,26 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.util.UUID;
 
 @Entity
 public class Locations {
-    private int locationId;
+    private UUID locationId;
     private String displayName;
-    private Integer areaId;
-    private Integer regionId;
-    private int countryId;
-    private Double latitude;
-    private Double longitude;
+    private UUID areaId;
+    private short regionId;
+    private short countryId;
+    private Integer zipCode;
+    private Integer municipalityId;
+    private Integer fiscalAuthorityCode;
 
     @Id
     @Column(name = "location_id")
-    public int getLocationId() {
+    public UUID getLocationId() {
         return locationId;
     }
 
-    public void setLocationId(int locationId) {
+    public void setLocationId(UUID locationId) {
         this.locationId = locationId;
     }
 
@@ -37,52 +39,62 @@ public class Locations {
 
     @Basic
     @Column(name = "area_id")
-    public Integer getAreaId() {
+    public UUID getAreaId() {
         return areaId;
     }
 
-    public void setAreaId(Integer areaId) {
+    public void setAreaId(UUID areaId) {
         this.areaId = areaId;
     }
 
     @Basic
     @Column(name = "region_id")
-    public Integer getRegionId() {
+    public short getRegionId() {
         return regionId;
     }
 
-    public void setRegionId(Integer regionId) {
+    public void setRegionId(short regionId) {
         this.regionId = regionId;
     }
 
     @Basic
     @Column(name = "country_id")
-    public int getCountryId() {
+    public short getCountryId() {
         return countryId;
     }
 
-    public void setCountryId(int countryId) {
+    public void setCountryId(short countryId) {
         this.countryId = countryId;
     }
 
     @Basic
-    @Column(name = "latitude")
-    public Double getLatitude() {
-        return latitude;
+    @Column(name = "zip_code")
+    public Integer getZipCode() {
+        return zipCode;
     }
 
-    public void setLatitude(Double latitude) {
-        this.latitude = latitude;
+    public void setZipCode(Integer zipCode) {
+        this.zipCode = zipCode;
     }
 
     @Basic
-    @Column(name = "longitude")
-    public Double getLongitude() {
-        return longitude;
+    @Column(name = "municipality_id")
+    public Integer getMunicipalityId() {
+        return municipalityId;
     }
 
-    public void setLongitude(Double longitude) {
-        this.longitude = longitude;
+    public void setMunicipalityId(Integer municipalityId) {
+        this.municipalityId = municipalityId;
+    }
+
+    @Basic
+    @Column(name = "fiscal_authority_code")
+    public Integer getFiscalAuthorityCode() {
+        return fiscalAuthorityCode;
+    }
+
+    public void setFiscalAuthorityCode(Integer fiscalAuthorityCode) {
+        this.fiscalAuthorityCode = fiscalAuthorityCode;
     }
 
     @Override
@@ -93,26 +105,30 @@ public class Locations {
         Locations locations = (Locations) o;
 
         if (countryId != locations.countryId) return false;
-        if (locationId != locations.locationId) return false;
+        if (regionId != locations.regionId) return false;
         if (areaId != null ? !areaId.equals(locations.areaId) : locations.areaId != null) return false;
         if (displayName != null ? !displayName.equals(locations.displayName) : locations.displayName != null)
             return false;
-        if (latitude != null ? !latitude.equals(locations.latitude) : locations.latitude != null) return false;
-        if (longitude != null ? !longitude.equals(locations.longitude) : locations.longitude != null) return false;
-        if (regionId != null ? !regionId.equals(locations.regionId) : locations.regionId != null) return false;
+        if (fiscalAuthorityCode != null ? !fiscalAuthorityCode.equals(locations.fiscalAuthorityCode) : locations.fiscalAuthorityCode != null)
+            return false;
+        if (locationId != null ? !locationId.equals(locations.locationId) : locations.locationId != null) return false;
+        if (municipalityId != null ? !municipalityId.equals(locations.municipalityId) : locations.municipalityId != null)
+            return false;
+        if (zipCode != null ? !zipCode.equals(locations.zipCode) : locations.zipCode != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = locationId;
+        int result = locationId != null ? locationId.hashCode() : 0;
         result = 31 * result + (displayName != null ? displayName.hashCode() : 0);
         result = 31 * result + (areaId != null ? areaId.hashCode() : 0);
-        result = 31 * result + (regionId != null ? regionId.hashCode() : 0);
-        result = 31 * result + countryId;
-        result = 31 * result + (latitude != null ? latitude.hashCode() : 0);
-        result = 31 * result + (longitude != null ? longitude.hashCode() : 0);
+        result = 31 * result + (int) regionId;
+        result = 31 * result + (int) countryId;
+        result = 31 * result + (zipCode != null ? zipCode.hashCode() : 0);
+        result = 31 * result + (municipalityId != null ? municipalityId.hashCode() : 0);
+        result = 31 * result + (fiscalAuthorityCode != null ? fiscalAuthorityCode.hashCode() : 0);
         return result;
     }
 }

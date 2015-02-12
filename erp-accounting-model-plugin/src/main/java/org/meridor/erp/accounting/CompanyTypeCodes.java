@@ -10,7 +10,6 @@ import javax.persistence.Table;
 @Table(name = "company_type_codes", schema = "public", catalog = "erp")
 public class CompanyTypeCodes {
     private int code;
-    private String name;
     private String displayName;
 
     @Id
@@ -21,16 +20,6 @@ public class CompanyTypeCodes {
 
     public void setCode(int code) {
         this.code = code;
-    }
-
-    @Basic
-    @Column(name = "name")
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     @Basic
@@ -52,7 +41,6 @@ public class CompanyTypeCodes {
 
         if (code != that.code) return false;
         if (displayName != null ? !displayName.equals(that.displayName) : that.displayName != null) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
 
         return true;
     }
@@ -60,7 +48,6 @@ public class CompanyTypeCodes {
     @Override
     public int hashCode() {
         int result = code;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (displayName != null ? displayName.hashCode() : 0);
         return result;
     }

@@ -12,8 +12,8 @@ import java.sql.Timestamp;
 public class AccountTransactions {
     private int transactionId;
     private Integer groupId;
-    private int fromId;
-    private int toId;
+    private short fromId;
+    private short toId;
     private double amount;
     private Timestamp createDate;
     private boolean applied;
@@ -40,21 +40,21 @@ public class AccountTransactions {
 
     @Basic
     @Column(name = "from_id")
-    public int getFromId() {
+    public short getFromId() {
         return fromId;
     }
 
-    public void setFromId(int fromId) {
+    public void setFromId(short fromId) {
         this.fromId = fromId;
     }
 
     @Basic
     @Column(name = "to_id")
-    public int getToId() {
+    public short getToId() {
         return toId;
     }
 
-    public void setToId(int toId) {
+    public void setToId(short toId) {
         this.toId = toId;
     }
 
@@ -112,8 +112,8 @@ public class AccountTransactions {
         long temp;
         result = transactionId;
         result = 31 * result + (groupId != null ? groupId.hashCode() : 0);
-        result = 31 * result + fromId;
-        result = 31 * result + toId;
+        result = 31 * result + (int) fromId;
+        result = 31 * result + (int) toId;
         temp = Double.doubleToLongBits(amount);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + (createDate != null ? createDate.hashCode() : 0);

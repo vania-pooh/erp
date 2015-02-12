@@ -3,28 +3,36 @@
              xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
              version="2.0">
     <persistence-unit name="accounting-model">
-        <class>org.meridor.erp.accounting.Settings</class>
-        <class>org.meridor.erp.accounting.TestTable</class>
         <class>org.meridor.erp.accounting.AccountTransactions</class>
+        <class>org.meridor.erp.accounting.AccountTransactionsTransactionIdSeq</class>
         <class>org.meridor.erp.accounting.Accounts</class>
         <class>org.meridor.erp.accounting.ActivityCodes</class>
         <class>org.meridor.erp.accounting.Addresses</class>
+        <class>org.meridor.erp.accounting.AddressesAddressIdSeq</class>
         <class>org.meridor.erp.accounting.AppliedTaxes</class>
         <class>org.meridor.erp.accounting.Areas</class>
         <class>org.meridor.erp.accounting.AssignedTaxAuthorities</class>
         <class>org.meridor.erp.accounting.Attorneys</class>
+        <class>org.meridor.erp.accounting.AttorneysAttorneyIdSeq</class>
         <class>org.meridor.erp.accounting.BankAccounts</class>
+        <class>org.meridor.erp.accounting.BankAccountsAccountIdSeq</class>
         <class>org.meridor.erp.accounting.Banks</class>
         <class>org.meridor.erp.accounting.BillContents</class>
         <class>org.meridor.erp.accounting.Bills</class>
+        <class>org.meridor.erp.accounting.BillsBillIdSeq</class>
+        <class>org.meridor.erp.accounting.BudgetAdministrators</class>
         <class>org.meridor.erp.accounting.BudgetClassificationCodes</class>
         <class>org.meridor.erp.accounting.BudgetPaymentReasons</class>
+        <class>org.meridor.erp.accounting.BudgetPaymentReasonsReasonIdSeq</class>
         <class>org.meridor.erp.accounting.BudgetPayments</class>
         <class>org.meridor.erp.accounting.Commands</class>
+        <class>org.meridor.erp.accounting.CommandsCommandIdSeq</class>
         <class>org.meridor.erp.accounting.Companies</class>
         <class>org.meridor.erp.accounting.CompanyTypeCodes</class>
         <class>org.meridor.erp.accounting.Contracts</class>
+        <class>org.meridor.erp.accounting.ContractsContractIdSeq</class>
         <class>org.meridor.erp.accounting.Counterparties</class>
+        <class>org.meridor.erp.accounting.CounterpartiesCounterpartyIdSeq</class>
         <class>org.meridor.erp.accounting.CounterpartyAddresses</class>
         <class>org.meridor.erp.accounting.CounterpartyAudit</class>
         <class>org.meridor.erp.accounting.CounterpartyCurrencies</class>
@@ -33,44 +41,64 @@
         <class>org.meridor.erp.accounting.Currencies</class>
         <class>org.meridor.erp.accounting.CurrenciesExchange</class>
         <class>org.meridor.erp.accounting.Departments</class>
+        <class>org.meridor.erp.accounting.DepartmentsDepartmentIdSeq</class>
         <class>org.meridor.erp.accounting.DocumentTemplates</class>
+        <class>org.meridor.erp.accounting.DocumentTemplatesTemplateIdSeq</class>
         <class>org.meridor.erp.accounting.Employees</class>
+        <class>org.meridor.erp.accounting.EmployeesEmployeeIdSeq</class>
         <class>org.meridor.erp.accounting.EventFlags</class>
         <class>org.meridor.erp.accounting.Events</class>
+        <class>org.meridor.erp.accounting.EventsEventIdSeq</class>
         <class>org.meridor.erp.accounting.Flags</class>
+        <class>org.meridor.erp.accounting.FlagsFlagIdSeq</class>
         <class>org.meridor.erp.accounting.IdentityCards</class>
+        <class>org.meridor.erp.accounting.IdentityCardsIdentityCardIdSeq</class>
         <class>org.meridor.erp.accounting.Invoices</class>
+        <class>org.meridor.erp.accounting.InvoicesInvoiceIdSeq</class>
         <class>org.meridor.erp.accounting.Locations</class>
         <class>org.meridor.erp.accounting.PaymentTypes</class>
         <class>org.meridor.erp.accounting.Payments</class>
+        <class>org.meridor.erp.accounting.PaymentsPaymentIdSeq</class>
         <class>org.meridor.erp.accounting.Persons</class>
+        <class>org.meridor.erp.accounting.PersonsPersonIdSeq</class>
         <class>org.meridor.erp.accounting.Posts</class>
         <class>org.meridor.erp.accounting.ProductGroups</class>
+        <class>org.meridor.erp.accounting.ProductGroupsGroupIdSeq</class>
         <class>org.meridor.erp.accounting.Products</class>
         <class>org.meridor.erp.accounting.PropertyFormCodes</class>
         <class>org.meridor.erp.accounting.ReferenceDocuments</class>
-        <class>org.meridor.erp.accounting.Regions</class>
+        <class>org.meridor.erp.accounting.ReferenceDocumentsReferenceIdSeq</class>
         <class>org.meridor.erp.accounting.ReportData</class>
         <class>org.meridor.erp.accounting.Reports</class>
         <class>org.meridor.erp.accounting.Roles</class>
+        <class>org.meridor.erp.accounting.RolesRoleIdSeq</class>
         <class>org.meridor.erp.accounting.Salary</class>
+        <class>org.meridor.erp.accounting.SalarySalaryIdSeq</class>
+        <class>org.meridor.erp.accounting.SchemaVersion</class>
+        <class>org.meridor.erp.accounting.Settings</class>
+        <class>org.meridor.erp.accounting.StateAuthorityCodes</class>
         <class>org.meridor.erp.accounting.TaxAuthorities</class>
         <class>org.meridor.erp.accounting.TaxDeductions</class>
+        <class>org.meridor.erp.accounting.TaxDeductionsDeductionIdSeq</class>
         <class>org.meridor.erp.accounting.TaxTypes</class>
+        <class>org.meridor.erp.accounting.TaxTypesTypeIdSeq</class>
         <class>org.meridor.erp.accounting.Taxes</class>
+        <class>org.meridor.erp.accounting.TaxesTaxIdSeq</class>
         <class>org.meridor.erp.accounting.Units</class>
         <class>org.meridor.erp.accounting.UserRoles</class>
         <class>org.meridor.erp.accounting.Users</class>
+        <class>org.meridor.erp.accounting.UsersUserIdSeq</class>
         <class>org.meridor.erp.accounting.WarehouseAudit</class>
         <class>org.meridor.erp.accounting.WarehouseAuditDetails</class>
+        <class>org.meridor.erp.accounting.WarehouseAuditEventIdSeq</class>
         <class>org.meridor.erp.accounting.WarehouseState</class>
         <class>org.meridor.erp.accounting.Warehouses</class>
-        <class>org.meridor.erp.accounting.ZipCodes</class>
+        <class>org.meridor.erp.accounting.WarehousesWarehouseIdSeq</class>
         <properties>
-            <property name="eclipselink.jdbc.url" value="jdbc:postgresql://localhost:5432/erp"/>
-            <property name="eclipselink.jdbc.driver" value="org.postgresql.Driver"/>
-            <property name="eclipselink.jdbc.user"/>
-            <property name="eclipselink.jdbc.password"/>
+            <property name="toplink.jdbc.url" value="jdbc:postgresql://localhost:5432/erp"/>
+            <property name="toplink.jdbc.driver" value="org.postgresql.Driver"/>
+            <property name="toplink.jdbc.user"/>
+            <property name="toplink.jdbc.password"/>
             <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/erp"/>
             <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
             <property name="hibernate.connection.username"/>
@@ -79,10 +107,10 @@
             <property name="openjpa.ConnectionDriverName" value="org.postgresql.Driver"/>
             <property name="openjpa.ConnectionUserName"/>
             <property name="openjpa.ConnectionPassword"/>
-            <property name="toplink.jdbc.url" value="jdbc:postgresql://localhost:5432/erp"/>
-            <property name="toplink.jdbc.driver" value="org.postgresql.Driver"/>
-            <property name="toplink.jdbc.user"/>
-            <property name="toplink.jdbc.password"/>
+            <property name="eclipselink.jdbc.url" value="jdbc:postgresql://localhost:5432/erp"/>
+            <property name="eclipselink.jdbc.driver" value="org.postgresql.Driver"/>
+            <property name="eclipselink.jdbc.user"/>
+            <property name="eclipselink.jdbc.password"/>
         </properties>
     </persistence-unit>
 </persistence>

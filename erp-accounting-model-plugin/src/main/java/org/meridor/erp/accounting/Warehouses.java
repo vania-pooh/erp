@@ -4,12 +4,13 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.util.UUID;
 
 @Entity
 public class Warehouses {
     private int warehouseId;
     private int companyId;
-    private int locationId;
+    private UUID locationId;
     private String name;
     private String displayName;
 
@@ -35,11 +36,11 @@ public class Warehouses {
 
     @Basic
     @Column(name = "location_id")
-    public int getLocationId() {
+    public UUID getLocationId() {
         return locationId;
     }
 
-    public void setLocationId(int locationId) {
+    public void setLocationId(UUID locationId) {
         this.locationId = locationId;
     }
 
@@ -71,9 +72,9 @@ public class Warehouses {
         Warehouses that = (Warehouses) o;
 
         if (companyId != that.companyId) return false;
-        if (locationId != that.locationId) return false;
         if (warehouseId != that.warehouseId) return false;
         if (displayName != null ? !displayName.equals(that.displayName) : that.displayName != null) return false;
+        if (locationId != null ? !locationId.equals(that.locationId) : that.locationId != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
 
         return true;
@@ -83,7 +84,7 @@ public class Warehouses {
     public int hashCode() {
         int result = warehouseId;
         result = 31 * result + companyId;
-        result = 31 * result + locationId;
+        result = 31 * result + (locationId != null ? locationId.hashCode() : 0);
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (displayName != null ? displayName.hashCode() : 0);
         return result;

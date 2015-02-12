@@ -3,6 +3,7 @@ package org.meridor.erp.accounting;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.math.BigInteger;
 import java.sql.Date;
 
 @Entity
@@ -67,39 +68,27 @@ public class Companies {
         this.displayName = displayName;
     }
 
-    private int registryId;
-
-    @Basic
-    @javax.persistence.Column(name = "registry_id")
-    public int getRegistryId() {
-        return registryId;
-    }
-
-    public void setRegistryId(int registryId) {
-        this.registryId = registryId;
-    }
-
-    private int taxNumber;
+    private Integer taxNumber;
 
     @Basic
     @javax.persistence.Column(name = "tax_number")
-    public int getTaxNumber() {
+    public Integer getTaxNumber() {
         return taxNumber;
     }
 
-    public void setTaxNumber(int taxNumber) {
+    public void setTaxNumber(Integer taxNumber) {
         this.taxNumber = taxNumber;
     }
 
-    private int fiscalCode;
+    private Integer fiscalCode;
 
     @Basic
     @javax.persistence.Column(name = "fiscal_code")
-    public int getFiscalCode() {
+    public Integer getFiscalCode() {
         return fiscalCode;
     }
 
-    public void setFiscalCode(int fiscalCode) {
+    public void setFiscalCode(Integer fiscalCode) {
         this.fiscalCode = fiscalCode;
     }
 
@@ -115,27 +104,27 @@ public class Companies {
         this.registrationDate = registrationDate;
     }
 
-    private int fiscalAuthorityCode;
+    private Integer fiscalAuthorityCode;
 
     @Basic
     @javax.persistence.Column(name = "fiscal_authority_code")
-    public int getFiscalAuthorityCode() {
+    public Integer getFiscalAuthorityCode() {
         return fiscalAuthorityCode;
     }
 
-    public void setFiscalAuthorityCode(int fiscalAuthorityCode) {
+    public void setFiscalAuthorityCode(Integer fiscalAuthorityCode) {
         this.fiscalAuthorityCode = fiscalAuthorityCode;
     }
 
-    private int fiscalAuthorityId;
+    private Integer fiscalAuthorityId;
 
     @Basic
     @javax.persistence.Column(name = "fiscal_authority_id")
-    public int getFiscalAuthorityId() {
+    public Integer getFiscalAuthorityId() {
         return fiscalAuthorityId;
     }
 
-    public void setFiscalAuthorityId(int fiscalAuthorityId) {
+    public void setFiscalAuthorityId(Integer fiscalAuthorityId) {
         this.fiscalAuthorityId = fiscalAuthorityId;
     }
 
@@ -151,64 +140,76 @@ public class Companies {
         this.pensionFundNumber = pensionFundNumber;
     }
 
-    private int pensionFundId;
+    private Integer pensionFundId;
 
     @Basic
     @javax.persistence.Column(name = "pension_fund_id")
-    public int getPensionFundId() {
+    public Integer getPensionFundId() {
         return pensionFundId;
     }
 
-    public void setPensionFundId(int pensionFundId) {
+    public void setPensionFundId(Integer pensionFundId) {
         this.pensionFundId = pensionFundId;
     }
 
-    private int socialInsuranceFundNumber;
+    private Integer socialInsuranceFundNumber;
 
     @Basic
     @javax.persistence.Column(name = "social_insurance_fund_number")
-    public int getSocialInsuranceFundNumber() {
+    public Integer getSocialInsuranceFundNumber() {
         return socialInsuranceFundNumber;
     }
 
-    public void setSocialInsuranceFundNumber(int socialInsuranceFundNumber) {
+    public void setSocialInsuranceFundNumber(Integer socialInsuranceFundNumber) {
         this.socialInsuranceFundNumber = socialInsuranceFundNumber;
     }
 
-    private int socialInsuranceFundId;
+    private Integer socialInsuranceFundId;
 
     @Basic
     @javax.persistence.Column(name = "social_insurance_fund_id")
-    public int getSocialInsuranceFundId() {
+    public Integer getSocialInsuranceFundId() {
         return socialInsuranceFundId;
     }
 
-    public void setSocialInsuranceFundId(int socialInsuranceFundId) {
+    public void setSocialInsuranceFundId(Integer socialInsuranceFundId) {
         this.socialInsuranceFundId = socialInsuranceFundId;
     }
 
-    private int typeCode;
+    private Integer typeCode;
 
     @Basic
     @javax.persistence.Column(name = "type_code")
-    public int getTypeCode() {
+    public Integer getTypeCode() {
         return typeCode;
     }
 
-    public void setTypeCode(int typeCode) {
+    public void setTypeCode(Integer typeCode) {
         this.typeCode = typeCode;
     }
 
-    private int propertyForm;
+    private BigInteger propertyForm;
 
     @Basic
     @javax.persistence.Column(name = "property_form")
-    public int getPropertyForm() {
+    public BigInteger getPropertyForm() {
         return propertyForm;
     }
 
-    public void setPropertyForm(int propertyForm) {
+    public void setPropertyForm(BigInteger propertyForm) {
         this.propertyForm = propertyForm;
+    }
+
+    private Integer stateAuthorityCode;
+
+    @Basic
+    @javax.persistence.Column(name = "state_authority_code")
+    public Integer getStateAuthorityCode() {
+        return stateAuthorityCode;
+    }
+
+    public void setStateAuthorityCode(Integer stateAuthorityCode) {
+        this.stateAuthorityCode = stateAuthorityCode;
     }
 
     private String mainActivity;
@@ -223,63 +224,51 @@ public class Companies {
         this.mainActivity = mainActivity;
     }
 
-    private int statisticsCode;
+    private Integer statisticsCode;
 
     @Basic
     @javax.persistence.Column(name = "statistics_code")
-    public int getStatisticsCode() {
+    public Integer getStatisticsCode() {
         return statisticsCode;
     }
 
-    public void setStatisticsCode(int statisticsCode) {
+    public void setStatisticsCode(Integer statisticsCode) {
         this.statisticsCode = statisticsCode;
     }
 
-    private int statisticsBranchId;
+    private Integer statisticsBranchId;
 
     @Basic
     @javax.persistence.Column(name = "statistics_branch_id")
-    public int getStatisticsBranchId() {
+    public Integer getStatisticsBranchId() {
         return statisticsBranchId;
     }
 
-    public void setStatisticsBranchId(int statisticsBranchId) {
+    public void setStatisticsBranchId(Integer statisticsBranchId) {
         this.statisticsBranchId = statisticsBranchId;
     }
 
-    private int territoryId;
-
-    @Basic
-    @javax.persistence.Column(name = "territory_id")
-    public int getTerritoryId() {
-        return territoryId;
-    }
-
-    public void setTerritoryId(int territoryId) {
-        this.territoryId = territoryId;
-    }
-
-    private int municipalityId;
+    private Integer municipalityId;
 
     @Basic
     @javax.persistence.Column(name = "municipality_id")
-    public int getMunicipalityId() {
+    public Integer getMunicipalityId() {
         return municipalityId;
     }
 
-    public void setMunicipalityId(int municipalityId) {
+    public void setMunicipalityId(Integer municipalityId) {
         this.municipalityId = municipalityId;
     }
 
-    private int mainCurrencyId;
+    private short mainCurrencyId;
 
     @Basic
     @javax.persistence.Column(name = "main_currency_id")
-    public int getMainCurrencyId() {
+    public short getMainCurrencyId() {
         return mainCurrencyId;
     }
 
-    public void setMainCurrencyId(int mainCurrencyId) {
+    public void setMainCurrencyId(short mainCurrencyId) {
         this.mainCurrencyId = mainCurrencyId;
     }
 
@@ -292,31 +281,40 @@ public class Companies {
 
         if (companyId != companies.companyId) return false;
         if (counterpartyId != companies.counterpartyId) return false;
-        if (fiscalAuthorityCode != companies.fiscalAuthorityCode) return false;
-        if (fiscalAuthorityId != companies.fiscalAuthorityId) return false;
-        if (fiscalCode != companies.fiscalCode) return false;
         if (mainCurrencyId != companies.mainCurrencyId) return false;
-        if (municipalityId != companies.municipalityId) return false;
-        if (pensionFundId != companies.pensionFundId) return false;
-        if (propertyForm != companies.propertyForm) return false;
-        if (registryId != companies.registryId) return false;
-        if (socialInsuranceFundId != companies.socialInsuranceFundId) return false;
-        if (socialInsuranceFundNumber != companies.socialInsuranceFundNumber) return false;
-        if (statisticsBranchId != companies.statisticsBranchId) return false;
-        if (statisticsCode != companies.statisticsCode) return false;
-        if (taxNumber != companies.taxNumber) return false;
-        if (territoryId != companies.territoryId) return false;
-        if (typeCode != companies.typeCode) return false;
         if (displayName != null ? !displayName.equals(companies.displayName) : companies.displayName != null)
             return false;
+        if (fiscalAuthorityCode != null ? !fiscalAuthorityCode.equals(companies.fiscalAuthorityCode) : companies.fiscalAuthorityCode != null)
+            return false;
+        if (fiscalAuthorityId != null ? !fiscalAuthorityId.equals(companies.fiscalAuthorityId) : companies.fiscalAuthorityId != null)
+            return false;
+        if (fiscalCode != null ? !fiscalCode.equals(companies.fiscalCode) : companies.fiscalCode != null) return false;
         if (fullName != null ? !fullName.equals(companies.fullName) : companies.fullName != null) return false;
         if (mainActivity != null ? !mainActivity.equals(companies.mainActivity) : companies.mainActivity != null)
             return false;
+        if (municipalityId != null ? !municipalityId.equals(companies.municipalityId) : companies.municipalityId != null)
+            return false;
+        if (pensionFundId != null ? !pensionFundId.equals(companies.pensionFundId) : companies.pensionFundId != null)
+            return false;
         if (pensionFundNumber != null ? !pensionFundNumber.equals(companies.pensionFundNumber) : companies.pensionFundNumber != null)
+            return false;
+        if (propertyForm != null ? !propertyForm.equals(companies.propertyForm) : companies.propertyForm != null)
             return false;
         if (registrationDate != null ? !registrationDate.equals(companies.registrationDate) : companies.registrationDate != null)
             return false;
         if (shortName != null ? !shortName.equals(companies.shortName) : companies.shortName != null) return false;
+        if (socialInsuranceFundId != null ? !socialInsuranceFundId.equals(companies.socialInsuranceFundId) : companies.socialInsuranceFundId != null)
+            return false;
+        if (socialInsuranceFundNumber != null ? !socialInsuranceFundNumber.equals(companies.socialInsuranceFundNumber) : companies.socialInsuranceFundNumber != null)
+            return false;
+        if (stateAuthorityCode != null ? !stateAuthorityCode.equals(companies.stateAuthorityCode) : companies.stateAuthorityCode != null)
+            return false;
+        if (statisticsBranchId != null ? !statisticsBranchId.equals(companies.statisticsBranchId) : companies.statisticsBranchId != null)
+            return false;
+        if (statisticsCode != null ? !statisticsCode.equals(companies.statisticsCode) : companies.statisticsCode != null)
+            return false;
+        if (taxNumber != null ? !taxNumber.equals(companies.taxNumber) : companies.taxNumber != null) return false;
+        if (typeCode != null ? !typeCode.equals(companies.typeCode) : companies.typeCode != null) return false;
 
         return true;
     }
@@ -328,24 +326,23 @@ public class Companies {
         result = 31 * result + (shortName != null ? shortName.hashCode() : 0);
         result = 31 * result + (fullName != null ? fullName.hashCode() : 0);
         result = 31 * result + (displayName != null ? displayName.hashCode() : 0);
-        result = 31 * result + registryId;
-        result = 31 * result + taxNumber;
-        result = 31 * result + fiscalCode;
+        result = 31 * result + (taxNumber != null ? taxNumber.hashCode() : 0);
+        result = 31 * result + (fiscalCode != null ? fiscalCode.hashCode() : 0);
         result = 31 * result + (registrationDate != null ? registrationDate.hashCode() : 0);
-        result = 31 * result + fiscalAuthorityCode;
-        result = 31 * result + fiscalAuthorityId;
+        result = 31 * result + (fiscalAuthorityCode != null ? fiscalAuthorityCode.hashCode() : 0);
+        result = 31 * result + (fiscalAuthorityId != null ? fiscalAuthorityId.hashCode() : 0);
         result = 31 * result + (pensionFundNumber != null ? pensionFundNumber.hashCode() : 0);
-        result = 31 * result + pensionFundId;
-        result = 31 * result + socialInsuranceFundNumber;
-        result = 31 * result + socialInsuranceFundId;
-        result = 31 * result + typeCode;
-        result = 31 * result + propertyForm;
+        result = 31 * result + (pensionFundId != null ? pensionFundId.hashCode() : 0);
+        result = 31 * result + (socialInsuranceFundNumber != null ? socialInsuranceFundNumber.hashCode() : 0);
+        result = 31 * result + (socialInsuranceFundId != null ? socialInsuranceFundId.hashCode() : 0);
+        result = 31 * result + (typeCode != null ? typeCode.hashCode() : 0);
+        result = 31 * result + (propertyForm != null ? propertyForm.hashCode() : 0);
+        result = 31 * result + (stateAuthorityCode != null ? stateAuthorityCode.hashCode() : 0);
         result = 31 * result + (mainActivity != null ? mainActivity.hashCode() : 0);
-        result = 31 * result + statisticsCode;
-        result = 31 * result + statisticsBranchId;
-        result = 31 * result + territoryId;
-        result = 31 * result + municipalityId;
-        result = 31 * result + mainCurrencyId;
+        result = 31 * result + (statisticsCode != null ? statisticsCode.hashCode() : 0);
+        result = 31 * result + (statisticsBranchId != null ? statisticsBranchId.hashCode() : 0);
+        result = 31 * result + (municipalityId != null ? municipalityId.hashCode() : 0);
+        result = 31 * result + (int) mainCurrencyId;
         return result;
     }
 }

@@ -11,7 +11,7 @@ import javax.persistence.Table;
 public class ActivityCodes {
     private String code;
     private String displayName;
-    private String parentCode;
+    private boolean enabled;
 
     @Id
     @Column(name = "code")
@@ -34,13 +34,13 @@ public class ActivityCodes {
     }
 
     @Basic
-    @Column(name = "parent_code")
-    public String getParentCode() {
-        return parentCode;
+    @Column(name = "enabled")
+    public boolean isEnabled() {
+        return enabled;
     }
 
-    public void setParentCode(String parentCode) {
-        this.parentCode = parentCode;
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     @Override
@@ -50,9 +50,9 @@ public class ActivityCodes {
 
         ActivityCodes that = (ActivityCodes) o;
 
+        if (enabled != that.enabled) return false;
         if (code != null ? !code.equals(that.code) : that.code != null) return false;
         if (displayName != null ? !displayName.equals(that.displayName) : that.displayName != null) return false;
-        if (parentCode != null ? !parentCode.equals(that.parentCode) : that.parentCode != null) return false;
 
         return true;
     }
@@ -61,7 +61,7 @@ public class ActivityCodes {
     public int hashCode() {
         int result = code != null ? code.hashCode() : 0;
         result = 31 * result + (displayName != null ? displayName.hashCode() : 0);
-        result = 31 * result + (parentCode != null ? parentCode.hashCode() : 0);
+        result = 31 * result + (enabled ? 1 : 0);
         return result;
     }
 }

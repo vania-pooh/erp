@@ -5,6 +5,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.sql.Date;
+import java.util.UUID;
 
 @Entity
 public class Persons {
@@ -16,7 +17,7 @@ public class Persons {
     private String parentalName;
     private String mark;
     private int identityCardId;
-    private int birthplaceId;
+    private UUID birthplaceId;
     private Date birthDate;
     private int citizenshipId;
     private String workPhone;
@@ -104,11 +105,11 @@ public class Persons {
 
     @Basic
     @Column(name = "birthplace_id")
-    public int getBirthplaceId() {
+    public UUID getBirthplaceId() {
         return birthplaceId;
     }
 
-    public void setBirthplaceId(int birthplaceId) {
+    public void setBirthplaceId(UUID birthplaceId) {
         this.birthplaceId = birthplaceId;
     }
 
@@ -159,13 +160,14 @@ public class Persons {
 
         Persons persons = (Persons) o;
 
-        if (birthplaceId != persons.birthplaceId) return false;
         if (citizenshipId != persons.citizenshipId) return false;
         if (companyId != persons.companyId) return false;
         if (counterpartyId != persons.counterpartyId) return false;
         if (identityCardId != persons.identityCardId) return false;
         if (personId != persons.personId) return false;
         if (birthDate != null ? !birthDate.equals(persons.birthDate) : persons.birthDate != null) return false;
+        if (birthplaceId != null ? !birthplaceId.equals(persons.birthplaceId) : persons.birthplaceId != null)
+            return false;
         if (homePhone != null ? !homePhone.equals(persons.homePhone) : persons.homePhone != null) return false;
         if (mark != null ? !mark.equals(persons.mark) : persons.mark != null) return false;
         if (name != null ? !name.equals(persons.name) : persons.name != null) return false;
@@ -187,7 +189,7 @@ public class Persons {
         result = 31 * result + (parentalName != null ? parentalName.hashCode() : 0);
         result = 31 * result + (mark != null ? mark.hashCode() : 0);
         result = 31 * result + identityCardId;
-        result = 31 * result + birthplaceId;
+        result = 31 * result + (birthplaceId != null ? birthplaceId.hashCode() : 0);
         result = 31 * result + (birthDate != null ? birthDate.hashCode() : 0);
         result = 31 * result + citizenshipId;
         result = 31 * result + (workPhone != null ? workPhone.hashCode() : 0);

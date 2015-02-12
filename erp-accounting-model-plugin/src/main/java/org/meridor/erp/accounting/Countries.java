@@ -7,39 +7,28 @@ import javax.persistence.Id;
 
 @Entity
 public class Countries {
-    private int countryId;
-    private String isoCode;
-    private String name;
+    private short countryId;
+    private String code;
     private String displayName;
 
     @Id
     @Column(name = "country_id")
-    public int getCountryId() {
+    public short getCountryId() {
         return countryId;
     }
 
-    public void setCountryId(int countryId) {
+    public void setCountryId(short countryId) {
         this.countryId = countryId;
     }
 
     @Basic
-    @Column(name = "iso_code")
-    public String getIsoCode() {
-        return isoCode;
+    @Column(name = "code")
+    public String getCode() {
+        return code;
     }
 
-    public void setIsoCode(String isoCode) {
-        this.isoCode = isoCode;
-    }
-
-    @Basic
-    @Column(name = "name")
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     @Basic
@@ -60,19 +49,17 @@ public class Countries {
         Countries countries = (Countries) o;
 
         if (countryId != countries.countryId) return false;
+        if (code != null ? !code.equals(countries.code) : countries.code != null) return false;
         if (displayName != null ? !displayName.equals(countries.displayName) : countries.displayName != null)
             return false;
-        if (isoCode != null ? !isoCode.equals(countries.isoCode) : countries.isoCode != null) return false;
-        if (name != null ? !name.equals(countries.name) : countries.name != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = countryId;
-        result = 31 * result + (isoCode != null ? isoCode.hashCode() : 0);
-        result = 31 * result + (name != null ? name.hashCode() : 0);
+        int result = (int) countryId;
+        result = 31 * result + (code != null ? code.hashCode() : 0);
         result = 31 * result + (displayName != null ? displayName.hashCode() : 0);
         return result;
     }

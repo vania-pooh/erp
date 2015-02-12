@@ -12,6 +12,7 @@ public class Products {
     private String name;
     private String displayName;
     private double price;
+    private short unitId;
     private int groupId;
 
     @Id
@@ -65,6 +66,16 @@ public class Products {
     }
 
     @Basic
+    @Column(name = "unit_id")
+    public short getUnitId() {
+        return unitId;
+    }
+
+    public void setUnitId(short unitId) {
+        this.unitId = unitId;
+    }
+
+    @Basic
     @Column(name = "group_id")
     public int getGroupId() {
         return groupId;
@@ -85,6 +96,7 @@ public class Products {
         if (groupId != products.groupId) return false;
         if (Double.compare(products.price, price) != 0) return false;
         if (productId != products.productId) return false;
+        if (unitId != products.unitId) return false;
         if (displayName != null ? !displayName.equals(products.displayName) : products.displayName != null)
             return false;
         if (name != null ? !name.equals(products.name) : products.name != null) return false;
@@ -102,6 +114,7 @@ public class Products {
         result = 31 * result + (displayName != null ? displayName.hashCode() : 0);
         temp = Double.doubleToLongBits(price);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (int) unitId;
         result = 31 * result + groupId;
         return result;
     }

@@ -7,21 +7,22 @@ import javax.persistence.Id;
 
 @Entity
 public class Accounts {
-    private int accountId;
+    private short accountId;
     private int companyId;
     private String code;
     private String accountType;
     private String displayName;
     private Integer parentId;
-    private int unitId;
+    private Boolean isGroup;
+    private short unitId;
 
     @Id
     @Column(name = "account_id")
-    public int getAccountId() {
+    public short getAccountId() {
         return accountId;
     }
 
-    public void setAccountId(int accountId) {
+    public void setAccountId(short accountId) {
         this.accountId = accountId;
     }
 
@@ -76,12 +77,22 @@ public class Accounts {
     }
 
     @Basic
+    @Column(name = "is_group")
+    public Boolean getIsGroup() {
+        return isGroup;
+    }
+
+    public void setIsGroup(Boolean isGroup) {
+        this.isGroup = isGroup;
+    }
+
+    @Basic
     @Column(name = "unit_id")
-    public int getUnitId() {
+    public short getUnitId() {
         return unitId;
     }
 
-    public void setUnitId(int unitId) {
+    public void setUnitId(short unitId) {
         this.unitId = unitId;
     }
 
@@ -100,6 +111,7 @@ public class Accounts {
         if (code != null ? !code.equals(accounts.code) : accounts.code != null) return false;
         if (displayName != null ? !displayName.equals(accounts.displayName) : accounts.displayName != null)
             return false;
+        if (isGroup != null ? !isGroup.equals(accounts.isGroup) : accounts.isGroup != null) return false;
         if (parentId != null ? !parentId.equals(accounts.parentId) : accounts.parentId != null) return false;
 
         return true;
@@ -107,13 +119,14 @@ public class Accounts {
 
     @Override
     public int hashCode() {
-        int result = accountId;
+        int result = (int) accountId;
         result = 31 * result + companyId;
         result = 31 * result + (code != null ? code.hashCode() : 0);
         result = 31 * result + (accountType != null ? accountType.hashCode() : 0);
         result = 31 * result + (displayName != null ? displayName.hashCode() : 0);
         result = 31 * result + (parentId != null ? parentId.hashCode() : 0);
-        result = 31 * result + unitId;
+        result = 31 * result + (isGroup != null ? isGroup.hashCode() : 0);
+        result = 31 * result + (int) unitId;
         return result;
     }
 }

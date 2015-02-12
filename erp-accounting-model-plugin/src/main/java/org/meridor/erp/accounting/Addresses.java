@@ -4,11 +4,12 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.util.UUID;
 
 @Entity
 public class Addresses {
     private int addressId;
-    private int locationId;
+    private UUID locationId;
     private int zipCode;
     private String streetName;
     private int streetNumber;
@@ -29,11 +30,11 @@ public class Addresses {
 
     @Basic
     @Column(name = "location_id")
-    public int getLocationId() {
+    public UUID getLocationId() {
         return locationId;
     }
 
-    public void setLocationId(int locationId) {
+    public void setLocationId(UUID locationId) {
         this.locationId = locationId;
     }
 
@@ -117,12 +118,12 @@ public class Addresses {
         if (addressId != addresses.addressId) return false;
         if (apartmentNumber != addresses.apartmentNumber) return false;
         if (apartmentType != addresses.apartmentType) return false;
-        if (locationId != addresses.locationId) return false;
         if (numericSuffix != addresses.numericSuffix) return false;
         if (streetNumber != addresses.streetNumber) return false;
         if (zipCode != addresses.zipCode) return false;
         if (letterSuffix != null ? !letterSuffix.equals(addresses.letterSuffix) : addresses.letterSuffix != null)
             return false;
+        if (locationId != null ? !locationId.equals(addresses.locationId) : addresses.locationId != null) return false;
         if (streetName != null ? !streetName.equals(addresses.streetName) : addresses.streetName != null) return false;
 
         return true;
@@ -131,7 +132,7 @@ public class Addresses {
     @Override
     public int hashCode() {
         int result = addressId;
-        result = 31 * result + locationId;
+        result = 31 * result + (locationId != null ? locationId.hashCode() : 0);
         result = 31 * result + zipCode;
         result = 31 * result + (streetName != null ? streetName.hashCode() : 0);
         result = 31 * result + streetNumber;
