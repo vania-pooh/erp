@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import org.meridor.erp.ui.Embed?>
+<Embed to="somePanel" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+       fx:controller="org.meridor.erp.desktop.TestController">
+    <Button id="anotherButton" onMouseClicked="#testMethod" prefHeight="100" prefWidth="100" text="SomeButton"/>
+</Embed>

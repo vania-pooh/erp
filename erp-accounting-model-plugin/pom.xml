@@ -11,5 +11,12 @@
 
     <artifactId>erp-accounting-model-plugin</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.meridor.erp</groupId>
+            <artifactId>erp-persistence</artifactId>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 
 </project>

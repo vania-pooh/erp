@@ -3,10 +3,9 @@ package org.meridor.erp.ui.dev;
 import javafx.application.Platform;
 import javafx.scene.Parent;
 import org.meridor.erp.plugins.PluginsLoadedEvent;
+import org.meridor.erp.ui.PluggableUI;
 import org.meridor.erp.ui.PluginUIProcessor;
 import org.meridor.erp.ui.UIFactory;
-import org.meridor.erp.ui.strategy.ReplacingUIStrategy;
-import org.meridor.erp.ui.strategy.UIStrategyFactory;
 import org.meridor.stecker.ResourcesWatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,9 +24,7 @@ public class DevPluginUIProcessor extends PluginUIProcessor {
 
     private ResourcesWatcher resourcesWatcher;
 
-    private final Map<Path, Parent> pluginUIMap = new HashMap<>();
-
-    private final Map<Path, ReplacingUIStrategy<Parent>> pluginUIFactoryMap = new HashMap<>();
+    private final Map<Path, PluggableUI> pluggedUIMap = new HashMap<>();
 
     public DevPluginUIProcessor(UIFactory uiFactory, Parent mainContainer) {
         super(uiFactory, mainContainer);
@@ -36,23 +33,10 @@ public class DevPluginUIProcessor extends PluginUIProcessor {
     @Override
     public void onApplicationEvent(PluginsLoadedEvent pluginsLoadedEvent) {
 
+        LOG.info("Using development plugin UI processor with refresh support");
         List<Path> fxmlFilePaths = getFXMLFiles(pluginsLoadedEvent);
-        try {
-            for (Path fxmlFilePath : fxmlFilePaths) {
-                LOG.info("Using development plugin UI processor with refresh support");
-                LOG.info(String.format(
-                        "Processing resource file %s",
-                        fxmlFilePath.toString()
-                ));
-                Parent ui = getUiFactory().getUI(fxmlFilePath);
-                ReplacingUIStrategy<Parent> uiStrategy = UIStrategyFactory.getReplacing(getMainContainer(), ui);
-                pluginUIMap.put(fxmlFilePath, ui);
-                pluginUIFactoryMap.put(fxmlFilePath, uiStrategy);
-                uiStrategy.add(ui);
-            }
-        } catch (Exception e) {
-            LOG.error("An exception while initializing UI from plugin", e);
-        }
+        Map<Path, PluggableUI> pluggedUI = processFXMLFiles(fxmlFilePaths);
+        pluggedUIMap.putAll(pluggedUI);
 
         if (fxmlFilePaths.size() > 0) {
             resourcesWatcher = new ResourcesWatcher(fxmlFilePaths);
@@ -69,27 +53,22 @@ public class DevPluginUIProcessor extends PluginUIProcessor {
 
     private void onFXMLFileChange(Path fxmlFilePath) {
         Platform.runLater(() -> {
-            Optional<Parent> uiCandidate = Optional.ofNullable(pluginUIMap.get(fxmlFilePath));
+            Optional<PluggableUI> uiCandidate = Optional.ofNullable(pluggedUIMap.get(fxmlFilePath));
             if (uiCandidate.isPresent()) {
                 LOG.info(String.format(
                         "Detected change in file [%s]",
                         fxmlFilePath
                 ));
-                Parent oldUI = uiCandidate.get();
+                PluggableUI oldUI = uiCandidate.get();
                 try {
                     getUiFactory().reset();
-                    Parent newUI = getUiFactory().getUI(fxmlFilePath);
-                    Optional<ReplacingUIStrategy<Parent>> uiStrategy = Optional.ofNullable(pluginUIFactoryMap.get(fxmlFilePath));
-                    if (uiStrategy.isPresent()) {
-                        uiStrategy.get().replace(oldUI, newUI);
-                        pluginUIMap.put(fxmlFilePath, newUI);
+                    Optional<PluggableUI> newUI = processFileContents(fxmlFilePath);
+                    if (newUI.isPresent()) {
+                        oldUI.unplug(getMainContainer());
+                        newUI.get().plug(getMainContainer());
+                        pluggedUIMap.put(fxmlFilePath, newUI.get());
                         LOG.info(String.format(
                                 "Successfully refreshed UI for file [%s]",
-                                fxmlFilePath
-                        ));
-                    } else {
-                        throw new IllegalStateException(String.format(
-                                "Replacing UI strategy for file [%s] is not present.",
                                 fxmlFilePath
                         ));
                     }

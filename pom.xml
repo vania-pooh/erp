@@ -31,7 +31,7 @@
     <modules>
         <module>erp-core</module>
         <module>erp-framework</module>
-        <module>erp-test-plugin</module>
+        <module>erp-desktop-plugin</module>
         <module>erp-persistence</module>
         <module>erp-ui</module>
         <module>erp-plugin-engine</module>
