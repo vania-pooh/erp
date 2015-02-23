@@ -101,13 +101,14 @@ public class App extends Application {
 
     private void showMainStage(Optional<Stage> externalStage) {
         Stage stage = externalStage.isPresent() ? externalStage.get() : new Stage(StageStyle.DECORATED);
-        stage.setTitle("Hello World");
+        stage.setMaximized(true);
+        stage.setTitle("Meridor ERP");
         Parent mainContainer = context.getBean("mainContainer", Parent.class);
         Scene scene = new Scene(mainContainer);
         stage.setScene(scene);
         stage.show();
     }
-
+    
     private void startWithSplashScreen(
             Stage primaryStage,
             InitCompletionHandler onInitializationSuccess

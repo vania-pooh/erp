@@ -1,8 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import org.meridor.erp.ui.Embed?>
-<Embed to="somePanel" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-       fx:controller="org.meridor.erp.desktop.TestController">
-    <Button id="anotherButton" onMouseClicked="#testMethod" prefHeight="100" prefWidth="100" text="SomeButton"/>
-</Embed>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import org.meridor.erp.ui.*?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import org.meridor.erp.ui.EmbedTabs?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconName ?>
+
+<?import org.meridor.erp.desktop.components.IconButton?>
+<EmbedTabs to="tabsContainer" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <tabs>
+      <Tab fx:id="homeTab" closable="false" text="Home">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0">
+              <children>
+                  <IconButton text="123" icon="ADJUST"/>
+              </children>
+          </AnchorPane>
+        </content>
+      </Tab>
+   </tabs>
+</EmbedTabs>

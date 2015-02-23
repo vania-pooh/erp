@@ -61,7 +61,6 @@ public class DevPluginUIProcessor extends PluginUIProcessor {
                 ));
                 PluggableUI oldUI = uiCandidate.get();
                 try {
-                    getUiFactory().reset();
                     Optional<PluggableUI> newUI = processFileContents(fxmlFilePath);
                     if (newUI.isPresent()) {
                         oldUI.unplug(getMainContainer());

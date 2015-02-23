@@ -3,12 +3,8 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="fxmlLoaderFactory" class="org.meridor.erp.ui.FXMLLoaderFactory"/>
-    <bean id="fxmlLoader" factory-bean="fxmlLoaderFactory" factory-method="getFXMLLoader" scope="prototype">
-        <constructor-arg ref="uberClassLoader"/>
-    </bean>
     <bean id="uiFactory" class="org.meridor.erp.ui.UIFactory" scope="prototype">
-        <constructor-arg ref="fxmlLoader"/>
+        <constructor-arg ref="smartClassLoader"/>
     </bean>
 
     <bean id="mainContainer" factory-bean="uiFactory" factory-method="getUI">

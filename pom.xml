@@ -15,7 +15,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring.version>4.0.7.RELEASE</spring.version>
         <steve.version>1.0.0-SNAPSHOT</steve.version>
-        <stecker.version>1.0.0-SNAPSHOT</stecker.version>
+        <stecker.version>1.0.1-SNAPSHOT</stecker.version>
         <hikari-cp.version>2.2.5</hikari-cp.version>
         <spring-data-jpa.version>1.7.1.RELEASE</spring-data-jpa.version>
         <hibernate.version>4.3.8.Final</hibernate.version>
@@ -170,6 +170,13 @@
                 <version>${stecker.version}</version>
             </dependency>
 
+            <!-- JavaFX -->
+            <dependency>
+                <groupId>de.jensd</groupId>
+                <artifactId>fontawesomefx</artifactId>
+                <version>8.1</version>
+            </dependency>
+            
             <!-- Misc -->
             <dependency>
                 <groupId>io.airlift</groupId>

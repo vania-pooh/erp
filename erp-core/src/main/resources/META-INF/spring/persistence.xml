@@ -32,7 +32,7 @@
                       class="org.meridor.erp.persistence.PluginPersistenceUnitPostProcessor"/>
             </list>
         </property>
-        <property name="beanClassLoader" ref="uberClassLoader"/>
+        <property name="beanClassLoader" ref="smartClassLoader"/>
     </bean>
 
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">

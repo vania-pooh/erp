@@ -48,7 +48,7 @@ public class PluginLoaderBeanDefinitionRegistryPostProcessor extends Configurati
 
     private ApplicationEventPublisher eventPublisher;
 
-    private UberClassLoader beanClassLoader = new UberClassLoader();
+    private SmartClassLoader beanClassLoader = new SmartClassLoader();
 
     @Override
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
@@ -68,12 +68,24 @@ public class PluginLoaderBeanDefinitionRegistryPostProcessor extends Configurati
             }
         }
 
-        List<Path> resources = pluginRegistry.getResources();
-        LOG.debug(String.format(
-                "Found %d resource files: [%s]",
-                resources.size(),
-                commaSeparated(resources.stream().map(Path::toString))
-        ));
+        List<String> pluginNames = pluginRegistry.getPluginNames();
+        for (String pluginName : pluginNames) {
+            List<Path> pluginResources = pluginRegistry.getResources(pluginName);
+            LOG.debug(String.format(
+                    "Found %d resource files for plugin %s: [%s]",
+                    pluginResources.size(),
+                    pluginName,
+                    commaSeparated(pluginResources.stream().map(Path::toString))
+            ));
+            
+            Optional<ClassLoader> pluginClassLoader = pluginRegistry.getClassLoader(pluginName);
+            if (pluginClassLoader.isPresent()) {
+                for (Path pluginResource : pluginResources) {
+                    beanClassLoader.addPathClassLoader(pluginResource, pluginClassLoader.get());
+                }
+            }
+        }
+        
         setBeanClassLoader(beanClassLoader);
         super.postProcessBeanDefinitionRegistry(registry);
     }
@@ -111,7 +123,7 @@ public class PluginLoaderBeanDefinitionRegistryPostProcessor extends Configurati
     }
 
     private void addToBeanClassLoader(Class implementation) {
-        LOG.debug(String.format("Adding implementation %s to UberClassLoader", implementation.getCanonicalName()));
+        LOG.debug(String.format("Adding implementation %s to SmartClassLoader", implementation.getCanonicalName()));
         beanClassLoader.addClass(implementation);
     }
 

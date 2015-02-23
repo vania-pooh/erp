@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>erp-test-plugin</artifactId>
+    <artifactId>erp-desktop-plugin</artifactId>
 
     <dependencies>
         <dependency>
@@ -39,6 +39,10 @@
         <dependency>
             <groupId>org.meridor.arabica</groupId>
             <artifactId>arabica-matchers</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>de.jensd</groupId>
+            <artifactId>fontawesomefx</artifactId>
         </dependency>
     </dependencies>
 

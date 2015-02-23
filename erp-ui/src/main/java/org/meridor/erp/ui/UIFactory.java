@@ -2,13 +2,13 @@ package org.meridor.erp.ui;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import org.meridor.erp.plugins.SmartClassLoader;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.io.Resource;
 
 import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.net.URI;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
@@ -19,12 +19,12 @@ import java.util.Collections;
 
 public class UIFactory implements ApplicationContextAware {
 
-    private FXMLLoader fxmlLoader;
-
+    private final SmartClassLoader smartClassLoader;
+    
     private ApplicationContext applicationContext;
 
-    public UIFactory(FXMLLoader fxmlLoader) {
-        this.fxmlLoader = fxmlLoader;
+    public UIFactory(SmartClassLoader smartClassLoader) {
+        this.smartClassLoader = smartClassLoader;
     }
 
     public Parent getUI(String fileName) throws Exception {
@@ -50,13 +50,14 @@ public class UIFactory implements ApplicationContextAware {
     }
 
     public Parent getUI(Path path) throws Exception {
-        try (InputStream inputStream = Files.newInputStream(path)) {
-            return fxmlLoader.load(inputStream);
-        }
+        return getFXMLLoader(path).load();
     }
-
-    public void reset() {
-        fxmlLoader = applicationContext.getBean(FXMLLoader.class);
+    
+    private FXMLLoader getFXMLLoader(Path path) throws Exception {
+        SmartFXMLLoader loader = new SmartFXMLLoader(smartClassLoader);
+        loader.setControllerFactory(applicationContext::getBean);
+        loader.setLocation(path.toUri().toURL());
+        return loader;
     }
 
     @Override

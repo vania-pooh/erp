@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
-<Pane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-    <VBox fx:id="somePanel">
-        <Button text="AButton" prefWidth="100" prefHeight="100"/>
-    </VBox>
-</Pane>
+
+
+<AnchorPane maxHeight="Infinity" maxWidth="Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+       <VBox fx:id="mainVBox" AnchorPane.leftAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
+           <children>
+            <TabPane fx:id="tabsContainer" tabClosingPolicy="UNAVAILABLE"/>
+           </children>
+       </VBox>
+   </children>
+</AnchorPane>

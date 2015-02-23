@@ -9,10 +9,10 @@ public class PluginClassLoaderBeanPostProcessor implements BeanPostProcessor {
 
     private static final Logger LOG = LoggerFactory.getLogger(PluginClassLoaderBeanPostProcessor.class);
 
-    private final UberClassLoader uberClassLoader;
+    private final SmartClassLoader smartClassLoader;
 
-    public PluginClassLoaderBeanPostProcessor(UberClassLoader uberClassLoader) {
-        this.uberClassLoader = uberClassLoader;
+    public PluginClassLoaderBeanPostProcessor(SmartClassLoader smartClassLoader) {
+        this.smartClassLoader = smartClassLoader;
     }
 
     @Override
@@ -22,9 +22,9 @@ public class PluginClassLoaderBeanPostProcessor implements BeanPostProcessor {
 
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-        if (bean instanceof UberClassLoader) {
-            LOG.debug("Returning bean class loader as UberClassLoader instance");
-            return uberClassLoader;
+        if (bean instanceof SmartClassLoader) {
+            LOG.debug("Returning bean class loader as SmartClassLoader instance");
+            return smartClassLoader;
         }
         return bean;
     }
