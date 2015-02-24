@@ -49,6 +49,7 @@ public class DevPluginUIProcessor extends PluginUIProcessor {
         } else {
             LOG.info("Did not start resources watcher because no resources were found");
         }
+        processUIProviders(pluginsLoadedEvent);
     }
 
     private void onFXMLFileChange(Path fxmlFilePath) {

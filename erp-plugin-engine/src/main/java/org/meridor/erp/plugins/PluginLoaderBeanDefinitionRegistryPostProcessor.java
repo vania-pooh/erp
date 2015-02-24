@@ -2,6 +2,7 @@ package org.meridor.erp.plugins;
 
 import org.meridor.erp.annotation.Controller;
 import org.meridor.erp.io.ResourceCategory;
+import org.meridor.erp.ui.UIProvider;
 import org.meridor.stecker.PluginException;
 import org.meridor.stecker.PluginLoader;
 import org.meridor.stecker.PluginMetadata;
@@ -53,8 +54,14 @@ public class PluginLoaderBeanDefinitionRegistryPostProcessor extends Configurati
     @Override
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
         pluginRegistry = loadPlugins();
-        List<Class> extensionPoints = pluginRegistry.getExtensionPoints();
+        processImplementations(registry, pluginRegistry);
+        processResources(pluginRegistry);
+        setBeanClassLoader(beanClassLoader);
+        super.postProcessBeanDefinitionRegistry(registry);
+    }
 
+    private void processImplementations(BeanDefinitionRegistry registry, PluginRegistry pluginRegistry) {
+        List<Class> extensionPoints = pluginRegistry.getExtensionPoints();
         for (Class extensionPoint : extensionPoints) {
             List<Class> implementations = pluginRegistry.getImplementations(extensionPoint);
             LOG.debug(String.format(
@@ -68,6 +75,9 @@ public class PluginLoaderBeanDefinitionRegistryPostProcessor extends Configurati
             }
         }
 
+    }
+
+    private void processResources(PluginRegistry pluginRegistry) {
         List<String> pluginNames = pluginRegistry.getPluginNames();
         for (String pluginName : pluginNames) {
             List<Path> pluginResources = pluginRegistry.getResources(pluginName);
@@ -77,7 +87,7 @@ public class PluginLoaderBeanDefinitionRegistryPostProcessor extends Configurati
                     pluginName,
                     commaSeparated(pluginResources.stream().map(Path::toString))
             ));
-            
+
             Optional<ClassLoader> pluginClassLoader = pluginRegistry.getClassLoader(pluginName);
             if (pluginClassLoader.isPresent()) {
                 for (Path pluginResource : pluginResources) {
@@ -85,9 +95,6 @@ public class PluginLoaderBeanDefinitionRegistryPostProcessor extends Configurati
                 }
             }
         }
-        
-        setBeanClassLoader(beanClassLoader);
-        super.postProcessBeanDefinitionRegistry(registry);
     }
 
     private void processImplementation(BeanDefinitionRegistry registry, Class implementation) {
@@ -197,6 +204,7 @@ public class PluginLoaderBeanDefinitionRegistryPostProcessor extends Configurati
 
                 //UI
                 Controller.class,
+                UIProvider.class,
 
                 //Persistence
                 Entity.class,

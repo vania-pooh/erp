@@ -35,6 +35,7 @@ public class PluginUIProcessor implements ApplicationListener<PluginsLoadedEvent
     public void onApplicationEvent(PluginsLoadedEvent pluginsLoadedEvent) {
         List<Path> fxmlFilePaths = getFXMLFiles(pluginsLoadedEvent);
         processFXMLFiles(fxmlFilePaths);
+        processUIProviders(pluginsLoadedEvent);
     }
 
     protected Map<Path, PluggableUI> processFXMLFiles(List<Path> fxmlFilePaths) {
@@ -56,7 +57,25 @@ public class PluginUIProcessor implements ApplicationListener<PluginsLoadedEvent
         }
         return pluggedUI;
     }
-    
+
+    protected void processUIProviders(PluginsLoadedEvent pluginsLoadedEvent) {
+        List<Class> uiProviders = pluginsLoadedEvent.getPluginRegistry().getImplementations(UIProvider.class);
+        for (Class uiProviderClass : uiProviders) {
+            try {
+                LOG.debug(String.format(
+                        "Processing UI provider class %s",
+                        uiProviderClass.getCanonicalName()
+                ));
+                UIProvider uiProvider = (UIProvider) uiProviderClass.newInstance();
+                uiProvider.provide().plug(mainContainer);
+            } catch (Exception e) {
+                LOG.error(String.format(
+                        "Failed to process UI provider class %s because of exception", uiProviderClass.getCanonicalName()
+                ), e);
+            }
+        }
+    }
+
     protected Optional<PluggableUI> processFileContents(Path fxmlFilePath) throws Exception {
         Parent ui = getUiFactory().getUI(fxmlFilePath);
         if (ui instanceof PluggableUI) {
@@ -70,7 +89,7 @@ public class PluginUIProcessor implements ApplicationListener<PluginsLoadedEvent
             return Optional.empty();
         }
     }
-    
+
     protected Parent getMainContainer() {
         return mainContainer;
     }
